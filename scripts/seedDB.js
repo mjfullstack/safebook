@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const db = require("../models");
 
-// Empties User collection and seeds DB
+// Empties User collection and seeds DB 
 
 mongoose.connect(
     process.env.MONGODB_URI ||
-    "mongodb://localhost/safebook"
+    "mongodb://localhost/safebook", { useNewUrlParser: true }
 );
 
 const userSeed = [
@@ -31,14 +31,14 @@ const userSeed = [
     }
 ];
 
-// db.User
-//     .remove({})
-//     .then(() => db.User.collection.insertMany(userSeed))
-//     .then(data => {
-//         console.log(data.result.n + " records inserted!");
-//         process.exit(0);
-//     })
-//     .catch(err => {
-//         console.error(err);
-//         process.exit(1);
-//     });
+db.Users
+    .remove({})
+    .then(() => db.Users.collection.insertMany(userSeed))
+    .then(data => {
+        console.log(data.result.n + " records inserted!");
+        process.exit(0);
+    })
+    .catch(err => {
+        console.error(err);
+        process.exit(1);
+    });
