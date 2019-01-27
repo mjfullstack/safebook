@@ -27,7 +27,6 @@ class Login extends Component {
             {/* <AppBar
               title="Login"
             /> */}
-            {/* <RoboTitle /> */}
 
             <Container fluid='fluid'>
               <h2 className='myPageTitle'>Enter Credentials</h2>

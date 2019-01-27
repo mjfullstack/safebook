@@ -32,32 +32,6 @@ class FixedNavbar extends React.Component {
   )
   }
 };
-  // eslint-disable-next-line
-{/**********
-
-// Removed from Centered
-
-          <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span className="sr-only">Toggle navigation</span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-          </button>
-          <a className="navbar-brand" href="#">Brand </a>
-
-
-  // Mine
-    <div>
-      <nav className="navbar fixed-top navbar-light bg-light">
-        <a className="navbar-brand" target="_blank" rel="noopener noreferrer" href="#"></a>
-        <ul className="nav navbar-nav">
-          <li><h1>Robo Click ME!</h1></li>
-        </ul>
-      </nav>
-    </div>
-    );
-     */}
-  
 
   export default FixedNavbar;
 
