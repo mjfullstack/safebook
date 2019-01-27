@@ -1,12 +1,10 @@
 import React from "react";
 // import {Container, Row, Col} from '../../Components/Grid/';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RoboList from "../../Components/CardList/RoboList";
 import RaisedButton from 'material-ui/RaisedButton';
 import './style.css';
 import CardList from "../../Components/CardList";
 
-// function HomePage ({ robots, users, shuffle, getRoboID}) {
 class HomePage extends React.Component {
 
   handleGoToSearchClick(event) {
@@ -15,7 +13,7 @@ class HomePage extends React.Component {
   }
   
   render() {
-    const { robots, users, shuffle, getRoboID} = this.props;
+    const { users } = this.props;
     console.log("HomePage - users: ", users);
     return (
       <div>
@@ -31,11 +29,6 @@ class HomePage extends React.Component {
             />
             <CardList
               users={users}
-            />
-            <RoboList
-              robots={robots}
-              shuffle={shuffle}
-              getRoboID={getRoboID}
             />
           </div>
         </MuiThemeProvider>

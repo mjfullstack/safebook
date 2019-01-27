@@ -2,8 +2,6 @@ import React from "react";
 // import {Container, Row, Col} from '../../Components/Grid/';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SearchBox from "../../Components/SearchBox";
-import RoboList from "../../Components/CardList/RoboList";
-// import RaisedButton from 'material-ui/RaisedButton';
 import './style.css';
 import CardList from "../../Components/CardList";
 
@@ -15,8 +13,7 @@ import CardList from "../../Components/CardList";
 
 class FindUser extends React.Component {
   render() {
-    const {robots , users, shuffle, searchChange, getRoboID} = this.props;
-    // console.log("FindUserPage - props: ", robots, shuffle, getRoboID);
+    const { users, searchChange } = this.props;
     console.log("FindUserPage - users: ", users);
     return (
       <div>
@@ -29,14 +26,6 @@ class FindUser extends React.Component {
             <CardList
               users={users}
             />
-            <RoboList
-              robots={robots}
-              // shuffle={() => this.setState({ robots: this.shuffleArray() })}
-              // shuffle={() => onSearchChange()}
-              shuffle={shuffle}
-              getRoboID={getRoboID}
-            />
-            {/* <RaisedButton label="Search" href='/finduser' primary={true} style={style} onClick={(event) => this.handleLoginClick(event)}/> */}
           </div>
         </MuiThemeProvider>
       </div>

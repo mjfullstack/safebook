@@ -100,7 +100,6 @@ class Register extends Component {
           {/* <AppBar
              title="Login"
            /> */}
-          {/* <RoboTitle /> */}
 
           <Container fluid='fluid'>
             <h2 className='myPageTitle'> Registration</h2>
@@ -165,14 +164,6 @@ class Register extends Component {
                 required
                 onChange={this.uploadFile} 
                 />
-                {/* <ImageUploader
-                  withIcon={true}
-                  withPreview={true}
-                  buttonText='Choose images'
-                  onChange={this.onDrop}
-                  imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                  maxFileSize={5242880}
-                /> */}
               </Col>
               <Col size='md-4' margin='2rem' />
             </Row>
