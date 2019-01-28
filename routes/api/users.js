@@ -100,7 +100,7 @@ router.post('/answers',function(req, res) {
   }); // end login
 
 router.post('/register', function(req, res) {
-    console.log("SAW REGISTER!!");
+    console.log("SAW REGISTER!! req.body: ", req.body);
     if (!req.body.email || !req.body.password)
       {
         // email address is absolutely necessary for user creation
@@ -131,7 +131,7 @@ router.post('/register', function(req, res) {
             }
             console.log('found*********** ',foundUsers);
             if (foundUsers && foundUsers.length > 0 ) {
-                console.log('founder user: '+foundUsers);
+                console.log('founder user: ', foundUsers);
                 // if users are found, we cannot create the user
                 // send an appropriate response back
                 res.status(204);
@@ -145,10 +145,15 @@ router.post('/register', function(req, res) {
                 // create the user with specified data
                 var user = new User();
 
-                user.firstName = req.body.firstName || 'none';
-                user.lastName =  req.body.lastName || 'none';
+                user.first_name = req.body.firstName || 'none';
+                // user.middle_name = req.body.middle_name || 'none';
+                user.last_name =  req.body.lastName || 'none';
                 user.email =     req.body.email;
+                user.username =  req.body.username || 'none';
                 user.password =  req.body.password;
+                // user.user_pic =  req.body.user_pic;
+                // user.birthdate =  req.body.birthdate;
+                // user.age =  req.body.age;
                 user.number = req.body.phoneNumber || 5555555555;
 
                 user.save(function(err) {

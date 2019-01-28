@@ -27,19 +27,8 @@ class Register extends Component {
       id: 0,
       pictures: [],
       imageURL: ''
-      // largeImage
     };
-    // this.onDrop = this.onDrop.bind(this);
   }
-
-  // For Images in Registration using 
-  // import ImageUploader from 'react-images-upload' above
-  // onDrop(picture) {
-  //   this.setState({
-  //       pictures: this.state.pictures.concat(picture),
-  //   });
-  // }
-  
 
   uploadFile = async e => {
     console.log(`uploading file...`)
@@ -60,12 +49,14 @@ class Register extends Component {
     console.log(file);
     this.setState({
       imageURL: file.secure_url,
-      // largeImage: file.eager[0].secure_url
     });
   }
 
+  displayResults = (data) => {
+    console.log("handleClick - displayResults Got CALLED: ", data);
+  };
 
-  handleClick(event, topState) {
+  handleClick = async (e, topState) => { //  (event, topState) { 
     // event.preventDefault(); // EDGAR workaround no persistence
     // Single user object
     const newUser = {
@@ -82,13 +73,33 @@ class Register extends Component {
       pictures: [this.state.imageURL]
     }
 
-    ///////
-    // ADD POST AJAX HERE to send data to backend
-    // versus saving in state here!
-    ///////
     console.log("ENTRY to handleClick - newUser: ", newUser);
+
+    /////////////////////////////////////////
+    // POST METHOD to send data to backend
+    // versus saving in state here!
+    /////////////////////////////////////////
+    e.preventDefault();
+    var getDataURL = "/api/users/register";
+    console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
+
+    const res = await fetch(getDataURL,
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser)
+      }
+    )
+    const regRes = await res.json();
+    console.log('RegisterPage handleClick AWAIT regRes: ', regRes);
+
+
     topState(newUser); // MUST put in Database HERE
-    return this.props.history.push("/home"); // EDGAR workaround no persistence
+    return this.props.history.push("/register"); // was /home, EDGAR workaround no persistence
+    // there is also a redirect function
   }
 
   render() {
@@ -180,7 +191,7 @@ class Register extends Component {
           <RaisedButton 
             label="Submit"
             // href="/home"
-            href="#"
+            // href="#"
             primary={true}
             style={style}
             onClick={(event) => this.handleClick(event, topLevelState)}
