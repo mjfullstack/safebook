@@ -13,6 +13,7 @@ const CardList = ({ users }) => {
         middle_name={user.middle_name} 
         last_name={user.last_name} 
         username={user.username} 
+        password={user.password} 
         birthdate={user.birthdate}
         age={user.age}
         user_pic={user.user_pic}
