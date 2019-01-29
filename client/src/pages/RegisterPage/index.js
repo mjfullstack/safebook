@@ -24,6 +24,7 @@ class Register extends Component {
       user_pic: '',
       birthdate: '',
       age: '',
+      phone_number: '',
       id: 0,
       pictures: [],
       imageURL: ''
@@ -69,6 +70,7 @@ class Register extends Component {
       user_pic: this.state.imageURL,
       birthdate: this.state.birthdate,
       age: this.state.age,
+      phone_number: this.state.phone_number,
       id: this.state.id + 1,
       pictures: [this.state.imageURL]
     }
@@ -82,7 +84,70 @@ class Register extends Component {
     e.preventDefault();
     var getDataURL = "/api/users/register";
     console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
+    const m = encodeURIComponent(newUser.email);
+    const u = encodeURIComponent(newUser.username);
+    const p = encodeURIComponent(newUser.password);
+    const requestBody = `email=${m}&username=${u}&password=${p}`;
+    const res = await fetch(getDataURL,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: requestBody
+      }
+    )
 
+    const regRes = await res.json();
+    console.log('RegisterPage handleClick AWAIT regRes: ', regRes);
+
+    // const sawError = done 
+
+
+/********************** Alternate Method **************
+ * // https://gist.github.com/milon87/109c9263821c0c4bac959ce1b4c3357c
+ * // x-www-form-urlencoded post in react native
+
+  getLoginAPI = () => {
+
+    let details = {
+        'username': 'username',
+        'password': 'demo'
+    };
+
+    let formBody = [];
+    for (let property in details) {
+        let encodedKey = encodeURIComponent(property);
+        let encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch('url', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer token',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formBody
+    }).then((response) => response.json())
+        .then((responseData) => {
+            console.log(responseData);
+
+
+            AlertIOS.alert(
+                "POST Response",
+                "Response Body " + JSON.stringify(responseData.role)
+            );
+        })
+        .done();
+  };     
+**********/
+
+
+
+
+
+/****
+    // WORKED, before url encoding for real login with token
     const res = await fetch(getDataURL,
       {
         method: 'POST',
@@ -93,8 +158,10 @@ class Register extends Component {
         body: JSON.stringify(newUser)
       }
     )
-    const regRes = await res.json();
-    console.log('RegisterPage handleClick AWAIT regRes: ', regRes);
+     ******/
+
+
+
 
 
     topState(newUser); // MUST put in Database HERE
@@ -118,6 +185,7 @@ class Register extends Component {
             <Row >
               <Col size='md-4' margin='0rem' >
                 <TextField className='dataEntry'
+                  type="email"
                   hintText="Enter your e-mail"
                   floatingLabelText="e-mail"
                   onChange = {(event,newValue) => this.setState({email:newValue})}
@@ -125,6 +193,7 @@ class Register extends Component {
               </Col>
               <Col size='md-4' margin='0rem' >
                 <TextField className='dataEntry'
+                  type="username"
                   hintText="Select a Username"
                   floatingLabelText="Username"
                   onChange = {(event,newValue) => this.setState({username:newValue})}
@@ -157,12 +226,38 @@ class Register extends Component {
               </Col>
               <Col size='md-4'>
                 <TextField className='dataEntry'
-                  // type="password"
                   hintText="Enter your LAST name"
                   floatingLabelText="Last Name"
                   onChange = {(event,newValue) => this.setState({last_name:newValue})}
                 />
               </Col>
+            </Row>
+            <Row>
+            <Col size='md-4' margin='0rem'>
+                <TextField className='dataEntry'
+                  type="date"
+                  hintText=""
+                  floatingLabelText="Birthdate"
+                  onChange = {(event,newValue) => this.setState({birthdate:newValue})}
+                />
+              </Col>
+              <Col size='md-4'>
+                <TextField className='dataEntry'
+                  type="number"
+                  hintText="Enter your Age"
+                  floatingLabelText="Age"
+                  onChange = {(event,newValue) => this.setState({age:newValue})}
+                />
+              </Col>
+              <Col size='md-4'>
+                <TextField className='dataEntry'
+                  type="phone"
+                  hintText="Enter your Phone Number"
+                  floatingLabelText="phone_number"
+                  onChange = {(event,newValue) => this.setState({phone_number:newValue})}
+                />
+              </Col>
+
             </Row>
             <Row >
               <Col size='md-4' margin='2rem' />
@@ -177,8 +272,6 @@ class Register extends Component {
                 />
               </Col>
               <Col size='md-4' margin='2rem' />
-            </Row>
-            <Row>
             </Row>
             <Row >
               <Col size='md-4' margin='2rem' />

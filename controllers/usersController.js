@@ -28,6 +28,7 @@ module.exports = {
                 req.params.email,
                 req.params.username,
                 req.params.password,
+                req.params.salt,
                 req.params.birthdate,
                 req.params.age,
                 req.params.created_date,

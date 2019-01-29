@@ -25,6 +25,7 @@ router.post('/answers',function(req, res) {
 
   //with valid login, return token
   router.post('/login', function(req, res)  {
+    console.log("SAW LOGIN!! req.body: ", req.body);
       if (!req.body.email || !req.body.password) {
           // email address is absolutely necessary for user creation
           res.json({
@@ -34,7 +35,7 @@ router.post('/answers',function(req, res) {
           });
           return;
       }
-      console.log('attempting login. email: '+req.body.email);
+      console.log('attempting login. email: ', req.body.email);
       User.findOne({
                email: req.body.email
               },
@@ -145,16 +146,16 @@ router.post('/register', function(req, res) {
                 // create the user with specified data
                 var user = new User();
 
-                user.first_name = req.body.firstName || 'none';
-                // user.middle_name = req.body.middle_name || 'none';
-                user.last_name =  req.body.lastName || 'none';
+                user.first_name = req.body.first_name || 'none';
+                user.middle_name = req.body.middle_name || 'none';
+                user.last_name =  req.body.last_name || 'none';
                 user.email =     req.body.email;
                 user.username =  req.body.username || 'none';
                 user.password =  req.body.password;
-                // user.user_pic =  req.body.user_pic;
-                // user.birthdate =  req.body.birthdate;
-                // user.age =  req.body.age;
-                user.number = req.body.phoneNumber || 5555555555;
+                user.user_pic =  req.body.user_pic;
+                user.birthdate =  req.body.birthdate;
+                user.age =  req.body.age;
+                user.phone_number = req.body.phone_number || 5555555555;
 
                 user.save(function(err) {
                     if (err) {
@@ -205,9 +206,9 @@ router.post('/register', function(req, res) {
 ////////////////////////////
 
 // Register NEW User
-router
-  .route("/register")
-    .get(usersController.findById);
+// router
+//   .route("/register")
+//     .get(usersController.findById);
 
 // router
 //   .route("/register", function(req, res, next) {
