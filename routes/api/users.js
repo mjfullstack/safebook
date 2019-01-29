@@ -219,15 +219,25 @@ router.post('/register', function(req, res) {
   
 // User's Home Page
 router.route("/home")
-    .get(usersController.findById);
+    .get(usersController.findByUserName);
+
+// User's Home Page
+router.route("/home/:username")
+    .get(usersController.findByUserName);
 
 // Get All Users
 router.route("/allusers")
     .get(usersController.findAll);
 
 // Get Users by ID
+// router
+//     .route("/:id")
+//     .get(usersController.findById)
+
+// Get Users by Username
+
 router
-    .route("/:id")
-    .get(usersController.findById)
+    .route("/:username")
+    .get(usersController.findByUserName)
 
 module.exports = router;
