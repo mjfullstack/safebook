@@ -55,6 +55,8 @@ router.post('/answers',function(req, res) {
                   }
                   if(user)
                   {
+                    console.log("req.body.password:", req.body.password);
+                    console.log("user.password:", user.password);
                     bcrypt.compare( req.body.password, user.password, function ( err, isMatch ) {
                       if ( err )
                           {
@@ -68,7 +70,7 @@ router.post('/answers',function(req, res) {
                               });
                           return;
                           }
-
+                          console.log("isMatch: ", isMatch);
                           if(isMatch)
                               {
                                   
