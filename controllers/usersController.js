@@ -12,11 +12,18 @@ module.exports = {
             // .then(res.send("test"))
             .catch(err => res.status(422).json(err));
     },
-    findById: function (req, res) {
+    // findById: function (req, res) {
+    //     db.Users
+    //         .findById(req.params.id)
+    //         .then(dbModel => res.json(dbModel))
+    //         .catch(err => res.status(422).json(err));
+    // },
+    findByUserName: function (req, res) {
         db.Users
-            .findById(req.params.id)
+            // .find(req.params.id.first_name)
+            .find({ username: req.params.username })
             .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
+            .catch(err => res.status(422).json(err))
     },
     register: function (req, res) {
         db.Users
