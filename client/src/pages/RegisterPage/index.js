@@ -84,15 +84,18 @@ class Register extends Component {
     e.preventDefault();
     var getDataURL = "/api/users/register";
     console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
-    const m = encodeURIComponent(newUser.email);
-    const u = encodeURIComponent(newUser.username);
-    const p = encodeURIComponent(newUser.password);
-    const requestBody = `email=${m}&username=${u}&password=${p}`;
+
+    const requestBody = {
+      email: newUser.email,
+      username: newUser.username,
+      password: newUser.password
+    }
+    console.log("handleClick - requestBody: ", requestBody);
     const res = await fetch(getDataURL,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-				body: requestBody
+        headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(requestBody)
       }
     )
 
@@ -167,6 +170,11 @@ class Register extends Component {
     topState(newUser); // MUST put in Database HERE
     return this.props.history.push("/register"); // was /home, EDGAR workaround no persistence
     // there is also a redirect function
+    //     res.json( // ADD THIS TI DIRECT BASED ON TOKEN PRESENT
+    //       {"token":token,
+    //       "token_for":req.body.email
+    // });
+
   }
 
   render() {
