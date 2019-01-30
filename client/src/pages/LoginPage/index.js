@@ -43,6 +43,8 @@ class Login extends Component {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 				body: requestBody
+      }, function(error) { // Added error catch to fetch
+        alert("Login Error: ",error.message); // String
       }
     )
 

@@ -1,5 +1,6 @@
-// SafeBook
-
+// SafeBook Config
+// import { url_dev } from './routes/config';
+const config = require ('./routes/config')
 // Express
 const express = require("express");
 
@@ -32,7 +33,8 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 
 // Connect to Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/safebook", { useNewUrlParser: true })
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/safebook", { useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB_URI || config.url_dev, { useNewUrlParser: true })
 
 // Start the API server
 app.listen(PORT, function () {

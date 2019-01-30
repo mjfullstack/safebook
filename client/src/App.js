@@ -14,16 +14,18 @@ export default class App extends Component {
     this.state = {
       searchfield: '',
       cardClicked: '',
-      users: [],
+      friends: [],
+      im_logged_in: {}
     }
   }
 
 
   setTopState = (newUser) => {
     this.setState((pvSt) => {
-      const updatedUsers = pvSt.users.concat(newUser);
+      return this.setState({im_logged_in: newUser})
+      // const updatedUsers = pvSt.users.concat(newUser);
       // console.log("AFTER PUSH in APP.setTopState - this.state.users[0]: ", this.state.users[0]);
-      return ({users: updatedUsers})
+      // return ({users: updatedUsers})
     })
   }
 
@@ -36,11 +38,11 @@ export default class App extends Component {
   };
 
   render() {
-    console.log("AFTER PUSH in APP.render - this.state.users[0]: ", this.state.users[0]);
-    // MUST populate state.users[] from database
+    console.log("AFTER SetSTATE in APP.render - this.state.im_logged_in: ", this.state.im_logged_in);
+    // MUST populate state.Friends[] from database
     // to avoid no-persistence work-around
-    const filteredUsers = this.state.users.filter(user => {
-      return user.first_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+    const filteredFriends = this.state.friends.filter(friend => {
+      return friend.first_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
     })
     return (
       <Router>
@@ -61,12 +63,13 @@ export default class App extends Component {
             <Route exact path="/home" 
               render={(props) => <HomePage {...props}
               // EDGAR suggested (not req'd) ---> componentDidMount={(props) => <HomePage {...props}
-              users={filteredUsers}
+              im_logged_in={this.state.im_logged_in}
+              friends={filteredFriends}
              />}
             />
             <Route exact path="/finduser" 
               render={(props) => <FindUser {...props}
-              users={filteredUsers}
+              friends={filteredFriends}
               searchChange={(event) => this.setState({searchfield: event.target.value})}
              />}
             />

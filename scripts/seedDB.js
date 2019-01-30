@@ -16,9 +16,14 @@ const userSeed = [
         email: "shaun.ericson@outlook.com",
         username: "sericson",
         password: "12345",
+        token: null,
+        logged_in_status: false,
+        user_id: null,
         user_pic: null,
         birthdate: "1982-04-24",
         age: 36,
+        phone_number: null,
+        pictures: [],
         created_date: new Date(Date.now()),
         last_modified_date: new Date(Date.now())
     },
@@ -29,9 +34,13 @@ const userSeed = [
         email: "michael.johnson@outlook.com",
         username: "mjohnson",
         password: "12345",
+        token: null,
+        logged_in_status: false,
+        user_id: null,
         user_pic: null,
         birthdate: "1962-09-05",
         age: 56,
+        phone_number: null,
         created_date: new Date(Date.now()),
         last_modified_date: new Date(Date.now())
     }
