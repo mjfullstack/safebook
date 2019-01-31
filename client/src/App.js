@@ -22,7 +22,9 @@ export default class App extends Component {
 
   setTopState = (newUser) => {
     this.setState((pvSt) => {
-      return this.setState({im_logged_in: newUser})
+      console.log("App setTopState: What goes into im_logged_in: ", newUser);
+      return ({im_logged_in: newUser})
+      // return this.setState({im_logged_in: newUser})
       // const updatedUsers = pvSt.users.concat(newUser);
       // console.log("AFTER PUSH in APP.setTopState - this.state.users[0]: ", this.state.users[0]);
       // return ({users: updatedUsers})
@@ -59,7 +61,13 @@ export default class App extends Component {
               topLevelState={(newUser) => this.setTopState(newUser)}
               />}
             />
-            <Route exact path="/" component={Login} />
+            {/* <Route exact path="/" component={Login} /> */}
+            <Route exact path="/"
+              render={(props) => <Login {...props} 
+              topLevelState={(loginUser) => this.setTopState(loginUser)}
+              im_logged_in={this.state.im_logged_in}
+              />}
+            />
             <Route exact path="/home" 
               render={(props) => <HomePage {...props}
               // EDGAR suggested (not req'd) ---> componentDidMount={(props) => <HomePage {...props}

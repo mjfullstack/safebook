@@ -28,36 +28,43 @@ class HomePage extends React.Component {
 
   // When the component mounts, load all user and save the state
   componentDidMount() {
-    console.log(" this.state.im_logged_in.username: ", this.state.im_logged_in.username );
-    this.loadUserProfile(this.state.im_logged_in.username);
+    console.log("HomePage componentDidMount this.state.im_logged_in.username: ", this.state.im_logged_in.username );
+    const loadedProfile = this.loadUserProfile(this.state.im_logged_in.username);
+    // this.setState({ user: res.data, im_logged_in: res.data }, ()=>{
+    this.setState( loadedProfile, ()=>{
+        console.log("HomePage loadUserProfile - res.data: ", loadedProfile);
+    })
   }
 
   // Loads all books  and sets them to this.state.books
   loadUserProfile = (loggedInUser) => {
     // API.getUser("sericson")
     API.getUser(loggedInUser)
-      .then(res =>
-        // this.setState({ user: res.data })
-        this.setState({ user: res.data }, ()=>{
-          console.log("loadUserProfile - res.data: ", res.data);
-          // if (this.state.user[0].username) {
-          //   console.log("loadUserProfile - this.state.user[0].username: ", this.state.user[0].username);
-          // } else {
-          //   console.log("loadUserProfile: User is not logged in.")
-          // }
-        })
-      )
-      .catch(err => console.log(err));
+     .then((res) => { 
+       console.log("HomePage loadUserProfile  loggedInUser: " , loggedInUser)
+       console.log("HomePage loadUserProfile  res: " , res)
+       return ({ user: res.data, im_logged_in: res.data }) 
+      // .then(res =>
+      //   // this.setState({ user: res.data })
+      //   this.setState({ user: res.data, im_logged_in: res.data }, ()=>{
+      //     console.log("HomePage loadUserProfile - res.data: ", res.data);
+      //   })
+      // )
+    })
+      .catch(err => console.log("HomePage LoadUserProfile err: ", err));
   };
 
   render() {
     const { friends } = this.props;
+    // this.loadUserProfile(this.state.im_logged_in.username);
     console.log("HomePage - friends: ", friends);
-    console.log("this.state.user: ", this.state.user);
+    console.log("HomePage this.state.user: ", this.state.user);
+    console.log("HomePage this.state.im_logged_in: ", this.state.im_logged_in);
+    console.log("HomePage this.state.im_logged_in.username: ", this.state.im_logged_in.username);
     if (this.state.im_logged_in.username) {
-      console.log("im_logged_in: ", this.state.im_logged_in.username)
+      console.log("HomePage this.state.im_logged_in.username: ", this.state.im_logged_in.username)
     } else {
-      console.log("im_logged_in: User is not logged in.")
+      console.log("HomePage this.state.im_logged_in.username: User is not logged in.")
     }
     return (
       <div>
@@ -71,6 +78,8 @@ class HomePage extends React.Component {
             <br />
             First Name: {this.state.im_logged_in ? this.state.im_logged_in.first_name : ""}
             <br />
+            {this.state.im_logged_in.middle_name ? 'Middle Name: ' + this.state.im_logged_in.middle_name : ''}
+            <br />
             Last Name: {this.state.im_logged_in ? this.state.im_logged_in.last_name : ""}
             <br />
             Email: {this.state.im_logged_in ? this.state.im_logged_in.email : ""}
@@ -83,7 +92,6 @@ class HomePage extends React.Component {
             <br />
             User Id: {this.state.im_logged_in ? this.state.im_logged_in.user_id : ""}
             <br />
-            {/* token: {this.state.im_logged_in ? this.state.im_logged_in.token : ""} */}
             </h5>
             <RaisedButton
               label="Go To Search"

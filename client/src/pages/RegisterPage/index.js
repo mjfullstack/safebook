@@ -63,7 +63,7 @@ class Register extends Component {
 
   handleClick = async (e, topState) => { 
     try {
-      // Single user object
+      // New User Object
       const newUser = {
         first_name: this.state.first_name,
         middle_name: this.state.middle_name,
@@ -81,8 +81,6 @@ class Register extends Component {
         id: this.state.id + 1,
         pictures: []
       }
-
-      console.log("ENTRY to handleClick - newUser: ", newUser);
 
       /////////////////////////////////////////
       // POST METHOD to send data to backend
@@ -146,7 +144,7 @@ class Register extends Component {
                     // handle existing email, username errors
                     // but NOT for MVP!!!
                     // USER already existed landed here.
-    alert("Register Page Says: ", err.message); // TypeError: failed to get JSON
+    alert("Register Page Says: Line 147", err.message); // TypeError: failed to get JSON
   }
 }
     
