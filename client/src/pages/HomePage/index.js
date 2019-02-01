@@ -16,7 +16,7 @@ class HomePage extends React.Component {
     this.state = {
       // username: ""
       // first_name: ""
-      user: null,
+      user: {},
       im_logged_in: props.im_logged_in
     };
   }
@@ -27,44 +27,27 @@ class HomePage extends React.Component {
   }
 
   // When the component mounts, load all user and save the state
-  componentDidMount() {
-    console.log("HomePage componentDidMount this.state.im_logged_in.username: ", this.state.im_logged_in.username );
-    const loadedProfile = this.loadUserProfile(this.state.im_logged_in.username);
-    // this.setState({ user: res.data, im_logged_in: res.data }, ()=>{
-    this.setState( loadedProfile, ()=>{
-        console.log("HomePage loadUserProfile - res.data: ", loadedProfile);
+  // componentDidMount() {
+  componentWillMount() {
+    API.getUser(this.state.im_logged_in.username)
+     .then((res) => { 
+      this.setState({im_logged_in: res.data[0]})
     })
+    .catch(err => console.log("HomePage LoadUserProfile err: ", err));
   }
 
-  // Loads all books  and sets them to this.state.books
-  loadUserProfile = (loggedInUser) => {
-    // API.getUser("sericson")
-    API.getUser(loggedInUser)
-     .then((res) => { 
-       console.log("HomePage loadUserProfile  loggedInUser: " , loggedInUser)
-       console.log("HomePage loadUserProfile  res: " , res)
-       return ({ user: res.data, im_logged_in: res.data }) 
-      // .then(res =>
-      //   // this.setState({ user: res.data })
-      //   this.setState({ user: res.data, im_logged_in: res.data }, ()=>{
-      //     console.log("HomePage loadUserProfile - res.data: ", res.data);
-      //   })
-      // )
-    })
-      .catch(err => console.log("HomePage LoadUserProfile err: ", err));
-  };
-
   render() {
+    console.log(`HOME LOADED ${JSON.stringify(this.state.im_logged_in)}`)
     const { friends } = this.props;
     // this.loadUserProfile(this.state.im_logged_in.username);
-    console.log("HomePage - friends: ", friends);
-    console.log("HomePage this.state.user: ", this.state.user);
-    console.log("HomePage this.state.im_logged_in: ", this.state.im_logged_in);
-    console.log("HomePage this.state.im_logged_in.username: ", this.state.im_logged_in.username);
+    // console.log("HomePage - friends: ", friends);
+    // console.log("HomePage this.state.user: ", this.state.user);
+    // console.log("HomePage this.state.im_logged_in: ", this.state.im_logged_in);
+    // console.log("HomePage this.state.im_logged_in.username: ", this.state.im_logged_in.username);
     if (this.state.im_logged_in.username) {
-      console.log("HomePage this.state.im_logged_in.username: ", this.state.im_logged_in.username)
+      // console.log("HomePage this.state.im_logged_in.username: ", this.state.im_logged_in.username)
     } else {
-      console.log("HomePage this.state.im_logged_in.username: User is not logged in.")
+      // console.log("HomePage this.state.im_logged_in.username: User is not logged in.")
     }
     return (
       <div>

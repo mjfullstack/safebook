@@ -26,14 +26,13 @@ class Login extends Component {
 
   // Loads all books  and sets them to this.state.books
   loadUserProfile = (loggedInUser) => {
-    console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)
     // API.getUser("sericson")
     API.getUser(loggedInUser)
     .then((res) => { 
       const profileFound = res.data;
       console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)
-      console.log("LoginPage loadUserProfile  res: " , res)
-      console.log("LoginPage loadUserProfile  profileFound: " , profileFound)
+      // console.log("LoginPage loadUserProfile  res: " , res)
+      // console.log("LoginPage loadUserProfile  profileFound: " , profileFound)
       return ({ res }) 
      // .then(res =>
       //   // this.setState({ user: res.data })
@@ -96,7 +95,9 @@ class Login extends Component {
         // console.log('LoginPage handleClick Before TopStateCall profileToLoad2: ', profileToLoad2);
         // console.log("LoginPage handleLoginClick this.loadUserProfile(loginUser.username) : ", this.loadUserProfile(loginUser.username));
         // console.log('LoginPage handleClick Before TopStateCall profileToLoad.im_logged_in: ', profileToLoad.im_logged_in);
-        await topState(loginUser); // 
+        console.log('BEFORE AWAIT')
+        await topState(loginUser); //
+        console.log('AFTER AWAIT') 
         return this.props.history.push("/home"); // Zack's recommendation
       } else {
         alert("Login Failed. \nTry Re-entering credentials")
