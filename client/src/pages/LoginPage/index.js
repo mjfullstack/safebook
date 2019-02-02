@@ -15,7 +15,7 @@ class Login extends Component {
       username:'',
       password:'',
       token: '',
-      logged_in_status: false,
+      logged_in_status: props.logged_in_status,
       im_logged_in: {}
     }
   }
@@ -24,28 +24,19 @@ class Login extends Component {
 
   }
 
-  // Loads all books  and sets them to this.state.books
+  // Loads all loggedInUser  and sets them to this.state.books
   loadUserProfile = (loggedInUser) => {
     // API.getUser("sericson")
     API.getUser(loggedInUser)
     .then((res) => { 
-      const profileFound = res.data;
       console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)
-      // console.log("LoginPage loadUserProfile  res: " , res)
-      // console.log("LoginPage loadUserProfile  profileFound: " , profileFound)
       return ({ res }) 
-     // .then(res =>
-      //   // this.setState({ user: res.data })
-      //   this.setState({im_logged_in: res.data }, ()=>{
-      //     console.log("LoginPage loadUserProfile - res.data: ", res.data);
-      //   })
-      // )
     })
       .catch(err => console.log("LoginPage LoadUserProfile err: ", err));
   };
 
 
-  handleLoginClick = async (e, topState) => { 
+  handleLoginClick = async (e, topState, set_logged_in) => { 
     try {
       // New Login Object
       const loginUser = {
@@ -58,7 +49,6 @@ class Login extends Component {
 
       /////////////////////////////////////////
       // POST METHOD to send data to backend
-      // versus saving in state here!
       /////////////////////////////////////////
       e.preventDefault();
       var getDataURL = "/api/users/login";
@@ -71,8 +61,8 @@ class Login extends Component {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(loginUser)
-        }, function(error) { // Added error catch to fetch
-          alert("Login Error: ",error.message); // String
+        }, function(error) { 
+          alert("Login Error: ",error.message);
         }
       )
 
@@ -85,36 +75,29 @@ class Login extends Component {
         if (loginUser.email === regRes.token_for) {
           console.log("LoginPage COMPARE Matched");
           loginUser.logged_in_status = true;
+          this.setState({logged_in_status: true})
+          console.log("LoginPage handleClick LOGIN - this.state.logged_in_status: ", this.state.logged_in_status);
+          await set_logged_in(this.state.logged_in_status)
         }
-        // const profileToLoad = this.loadUserProfile(regRes.token_for);
         console.log("LoginPage handleLoginClick loginUser.username : ", loginUser.username)
-        // let profileToLoad = this.loadUserProfile(loginUser.username);
         await this.loadUserProfile(loginUser.username);
-        // console.log('LoginPage handleClick Before TopStateCall profileToLoad: ', profileToLoad);
-        // let profileToLoad2 = this.loadUserProfile(this.loginUser.username);
-        // console.log('LoginPage handleClick Before TopStateCall profileToLoad2: ', profileToLoad2);
-        // console.log("LoginPage handleLoginClick this.loadUserProfile(loginUser.username) : ", this.loadUserProfile(loginUser.username));
-        // console.log('LoginPage handleClick Before TopStateCall profileToLoad.im_logged_in: ', profileToLoad.im_logged_in);
-        console.log('BEFORE AWAIT')
+        // console.log('BEFORE AWAIT')
         await topState(loginUser); //
-        console.log('AFTER AWAIT') 
+        // console.log('AFTER AWAIT') 
         return this.props.history.push("/home"); // Zack's recommendation
       } else {
         alert("Login Failed. \nTry Re-entering credentials")
         return this.props.history.push("/"); // Zack's recommendation
         // there is also a redirect function
       }
-    } catch(err) {  // DID What... This ALERTS even when login was successful...
-      // alert("Login Page Says: Line 75", err.message); // 
-      console.log("Login Page Says: Line 105", err); // 
-      console.log("Login Page Says: Line 106", err.message); // 
+    } catch(err) { 
+      console.log("Login Page Says: Line 94", err); // 
+      console.log("Login Page Says: Line 95", err.message); // 
     }
   }
 
-
-
   render() {
-    const {topLevelState} = this.props;
+    const {topLevelState, set_logged_in, logged_in_status} = this.props;
       return (
         <div>
           <MuiThemeProvider>
@@ -150,8 +133,7 @@ class Login extends Component {
                 </Col>
               </Row>
             </Container>
-              {/* <RaisedButton label="Login" href='/home' primary={true} style={style} onClick={(event) => this.handleLoginClick(event)}/> */}
-              <RaisedButton label="Login" primary={true} style={style} onClick={(event) => this.handleLoginClick(event, topLevelState)}/>
+              <RaisedButton label="Login" primary={true} style={style} onClick={(event) => this.handleLoginClick(event, topLevelState, set_logged_in)}/>
               <h5 className="tc f5">Not yet a member?</h5>
               <RaisedButton label="Register" href='/register' primary={true} style={style} onClick={(event) => this.handleGoToRegisterClick(event)}/>
           </div>

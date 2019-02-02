@@ -15,14 +15,19 @@ export default class App extends Component {
       searchfield: '',
       cardClicked: '',
       friends: [],
-      im_logged_in: {}
+      im_logged_in: {}, // Object
+      logged_in_status: false // Boolean to track across app
     }
   }
-
+  setLoggedInStatus = (logged_in_status) => {
+    this.setState({logged_in_status: logged_in_status})
+    console.log("App setLoggedInStatus: What goes into im_logged_in: ", logged_in_status);
+    return ({logged_in_status: logged_in_status})
+  }
 
   setTopState = (newUser) => {
     this.setState((pvSt) => {
-      console.log("App setTopState: What goes into im_logged_in: ", newUser);
+      // console.log("App setTopState: What goes into im_logged_in: ", newUser);
       return ({im_logged_in: newUser})
       // return this.setState({im_logged_in: newUser})
       // const updatedUsers = pvSt.users.concat(newUser);
@@ -53,7 +58,9 @@ export default class App extends Component {
             currentScore={this.state.currentScore}
             highScore={this.state.highScore}
             wonDisplayed={this.state.wonDisplayed}
-          />
+            set_logged_in={(logged_in_status) => this.setLoggedInStatus(logged_in_status)}
+            logged_in_status={this.state.logged_in_status}
+            />
 
           <Switch>
             <Route exact path="/register"
@@ -66,6 +73,7 @@ export default class App extends Component {
               render={(props) => <Login {...props} 
               topLevelState={(loginUser) => this.setTopState(loginUser)}
               im_logged_in={this.state.im_logged_in}
+              set_logged_in={(logged_in_status) => this.setLoggedInStatus(logged_in_status)}
               />}
             />
             <Route exact path="/home" 

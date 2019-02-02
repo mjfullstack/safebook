@@ -149,7 +149,7 @@ router.post('/register', function(req, res) {
                 var user = new User();
 
                 user.first_name = req.body.first_name || 'none';
-                user.middle_name = req.body.middle_name || 'none';
+                user.middle_name = req.body.middle_name;
                 user.last_name =  req.body.last_name || 'none';
                 user.email =     req.body.email;
                 user.username =  req.body.username || 'none';

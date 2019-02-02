@@ -6,11 +6,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import './style.css';
 
-
-// import ImageUploader from 'react-images-upload';
-// import {Image} from 'cloudinary-react';
-
-
 class Register extends Component {
   constructor(props){
     super(props);
@@ -46,8 +41,8 @@ class Register extends Component {
       {
         method: 'POST',
         body: data
-      }, function(error) { // Added error catch to fetch
-        alert("Pic Store Error: ",error.message); // String
+      }, function(error) { 
+        alert("Pic Store Error: ",error.message);
       }
     )
     const file = await res.json();
@@ -84,7 +79,6 @@ class Register extends Component {
 
       /////////////////////////////////////////
       // POST METHOD to send data to backend
-      // versus saving in state here!
       /////////////////////////////////////////
       e.preventDefault();
       var getDataURL = "/api/users/register";
@@ -115,8 +109,8 @@ class Register extends Component {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(requestBody)
-        }, function(error) { // Added error catch to fetch, not seeing this error yet...
-          alert("Registration Error: ",error.message); // String
+        }, function(error) { 
+          alert("Registration Error: ",error.message);
         }
       )
 
@@ -263,8 +257,7 @@ class Register extends Component {
           </Container>
           <RaisedButton 
             label="Submit"
-            // href="/home"
-            // href="#"
+            // href="/home" // Using onClick function and props.hsitory.push to get to next page
             primary={true}
             style={style}
             onClick={(event) => this.handleClick(event, topLevelState)}
