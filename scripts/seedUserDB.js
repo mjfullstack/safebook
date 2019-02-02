@@ -21,6 +21,11 @@ const userSeed = [
         age: 36,
         created_date: new Date(Date.now()),
         last_modified_date: new Date(Date.now())
+        // posts: {
+        //     post: "test",
+        //     username_posted: "sericson",
+        //     created_date: new Date(Date.now())
+        // }
     },
     {
         first_name: "Michael",
