@@ -66,6 +66,7 @@ export default class App extends Component {
             <Route exact path="/register"
               render={(props) => <Register {...props} 
               topLevelState={(newUser) => this.setTopState(newUser)}
+              set_logged_in={(logged_in_status) => this.setLoggedInStatus(logged_in_status)}
               />}
             />
             {/* <Route exact path="/" component={Login} /> */}

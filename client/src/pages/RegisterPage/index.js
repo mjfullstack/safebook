@@ -24,6 +24,7 @@ class Register extends Component {
       phone_number: '',
       id: 0,
       pictures: [],
+      logged_in_status: props.logged_in_status,
       imageURL: ''
     };
   }
@@ -56,7 +57,7 @@ class Register extends Component {
     console.log("handleClick - displayResults Got CALLED: ", data);
   };
 
-  handleClick = async (e, topState) => { 
+  handleClick = async (e, topState, set_logged_in) => { 
     try {
       // New User Object
       const newUser = {
@@ -121,6 +122,10 @@ class Register extends Component {
       if (regRes.data.token && regRes.success) {
         newUser.token = regRes.data.token;
         newUser.logged_in_status = regRes.success;
+        this.setState({logged_in_status: newUser.logged_in_status})
+        console.log("RegisterPage handleClick SUBMIT - this.state.logged_in_status: ", this.state.logged_in_status);
+        await set_logged_in(this.state.logged_in_status)
+
         await topState(newUser); 
         return this.props.history.push("/home"); // Zack's recommendation
       } else {
@@ -144,7 +149,7 @@ class Register extends Component {
     
 
   render() {
-    const {topLevelState} = this.props;
+    const {topLevelState, set_logged_in} = this.props;
     return (
       <div>
         <MuiThemeProvider>
@@ -260,7 +265,7 @@ class Register extends Component {
             // href="/home" // Using onClick function and props.hsitory.push to get to next page
             primary={true}
             style={style}
-            onClick={(event) => this.handleClick(event, topLevelState)}
+            onClick={(event) => this.handleClick(event, topLevelState, set_logged_in)}
           />
         </div>
          </MuiThemeProvider>
