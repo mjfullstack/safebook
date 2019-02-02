@@ -2,21 +2,21 @@
 import React from 'react';
 import Card from '../Card';
 
-const CardList = ({ users }) => {
-  console.log("CardList -- Users: ", users)
-  const cardArray = users.map((user, idx) => {
+const CardList = ({ friends }) => {
+  console.log("CardList -- friends: ", friends)
+  const cardArray = friends.map((friend) => {
     return ( 
       <Card 
-        key={user.id} 
-        id={user.id} 
-        first_name={user.first_name} 
-        middle_name={user.middle_name} 
-        last_name={user.last_name} 
-        username={user.username} 
-        password={user.password} 
-        birthdate={user.birthdate}
-        age={user.age}
-        user_pic={user.user_pic}
+        key={friend.id} 
+        id={friend.id} 
+        first_name={friend.first_name} 
+        middle_name={friend.middle_name} 
+        last_name={friend.last_name} 
+        username={friend.username} 
+        password={friend.password} 
+        birthdate={friend.birthdate}
+        age={friend.age}
+        user_pic={friend.user_pic}
       />
     )
   })

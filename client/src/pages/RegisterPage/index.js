@@ -6,11 +6,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import './style.css';
 
-
-// import ImageUploader from 'react-images-upload';
-// import {Image} from 'cloudinary-react';
-
-
 class Register extends Component {
   constructor(props){
     super(props);
@@ -21,12 +16,15 @@ class Register extends Component {
       email: '',
       username:'',
       password:'',
+      token: '',
+      logged_in_status: false,
       user_pic: '',
       birthdate: '',
       age: '',
       phone_number: '',
       id: 0,
       pictures: [],
+      logged_in_status: props.logged_in_status,
       imageURL: ''
     };
   }
@@ -44,6 +42,8 @@ class Register extends Component {
       {
         method: 'POST',
         body: data
+      }, function(error) { 
+        alert("Pic Store Error: ",error.message);
       }
     )
     const file = await res.json();
@@ -57,128 +57,99 @@ class Register extends Component {
     console.log("handleClick - displayResults Got CALLED: ", data);
   };
 
-  handleClick = async (e, topState) => { //  (event, topState) { 
-    // event.preventDefault(); // EDGAR workaround no persistence
-    // Single user object
-    const newUser = {
-      first_name: this.state.first_name,
-      middle_name: this.state.middle_name,
-      last_name: this.state.last_name,
-      email: this.state.email,
-      username:this.state.username,
-      password:this.state.password,
-      user_pic: this.state.imageURL,
-      birthdate: this.state.birthdate,
-      age: this.state.age,
-      phone_number: this.state.phone_number,
-      id: this.state.id + 1,
-      pictures: [this.state.imageURL]
-    }
-
-    console.log("ENTRY to handleClick - newUser: ", newUser);
-
-    /////////////////////////////////////////
-    // POST METHOD to send data to backend
-    // versus saving in state here!
-    /////////////////////////////////////////
-    e.preventDefault();
-    var getDataURL = "/api/users/register";
-    console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
-
-    const requestBody = {
-      email: newUser.email,
-      username: newUser.username,
-      password: newUser.password
-    }
-    console.log("handleClick - requestBody: ", requestBody);
-    const res = await fetch(getDataURL,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(requestBody)
+  handleClick = async (e, topState, set_logged_in) => { 
+    try {
+      // New User Object
+      const newUser = {
+        first_name: this.state.first_name,
+        middle_name: this.state.middle_name,
+        last_name: this.state.last_name,
+        email: this.state.email,
+        username: this.state.username,
+        password: this.state.password,
+        token: this.state.token,
+        logged_in_status: this.state.logged_in_status,
+        user_id: this.state.user_id,
+        user_pic: this.state.imageURL,
+        birthdate: this.state.birthdate,
+        age: this.state.age,
+        phone_number: this.state.phone_number,
+        id: this.state.id + 1,
+        pictures: []
       }
-    )
 
-    const regRes = await res.json();
-    console.log('RegisterPage handleClick AWAIT regRes: ', regRes);
+      /////////////////////////////////////////
+      // POST METHOD to send data to backend
+      /////////////////////////////////////////
+      e.preventDefault();
+      var getDataURL = "/api/users/register";
+      console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
 
-    // const sawError = done 
-
-
-/********************** Alternate Method **************
- * // https://gist.github.com/milon87/109c9263821c0c4bac959ce1b4c3357c
- * // x-www-form-urlencoded post in react native
-
-  getLoginAPI = () => {
-
-    let details = {
-        'username': 'username',
-        'password': 'demo'
-    };
-
-    let formBody = [];
-    for (let property in details) {
-        let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-
-    fetch('url', {
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer token',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: formBody
-    }).then((response) => response.json())
-        .then((responseData) => {
-            console.log(responseData);
-
-
-            AlertIOS.alert(
-                "POST Response",
-                "Response Body " + JSON.stringify(responseData.role)
-            );
-        })
-        .done();
-  };     
-**********/
-
-
-
-
-
-/****
-    // WORKED, before url encoding for real login with token
-    const res = await fetch(getDataURL,
-      {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newUser)
+      // This IS what gets put into the Mongo DB at the backend
+      const requestBody = { 
+        first_name: newUser.first_name,
+        middle_name: newUser.middle_name,
+        last_name: newUser.last_name,
+        email: newUser.email,
+        username: newUser.username,
+        password: newUser.password,
+        token: newUser.token,
+        logged_in_status: newUser.logged_in_status,
+        user_id: newUser.user_id,
+        user_pic: newUser.user_pic,
+        birthdate: newUser.birthdate,
+        age: newUser.age,
+        phone_number: newUser.phone_number
       }
-    )
-     ******/
+      console.log("handleClick - requestBody: ", requestBody);
+      const res = await fetch(getDataURL,
+        {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestBody)
+        }, function(error) { 
+          alert("Registration Error: ",error.message);
+        }
+      )
 
+      const regRes = await res.json();
+      console.log("regRes: ", regRes);
+      console.log(`RegisterPage handleClick SUBMIT: regRes.success ${regRes.success}, regRes.data.token: ${regRes.data.token}`);
 
+      if (regRes.data.token && regRes.success) {
+        newUser.token = regRes.data.token;
+        newUser.logged_in_status = regRes.success;
+        this.setState({logged_in_status: newUser.logged_in_status})
+        console.log("RegisterPage handleClick SUBMIT - this.state.logged_in_status: ", this.state.logged_in_status);
+        await set_logged_in(this.state.logged_in_status)
 
-
-
-    topState(newUser); // MUST put in Database HERE
-    return this.props.history.push("/register"); // was /home, EDGAR workaround no persistence
-    // there is also a redirect function
-    //     res.json( // ADD THIS TI DIRECT BASED ON TOKEN PRESENT
-    //       {"token":token,
-    //       "token_for":req.body.email
-    // });
-
+        await topState(newUser); 
+        return this.props.history.push("/home"); // Zack's recommendation
+      } else {
+        alert("Registration Failed. Already Registered?\nTry Logging In")
+        return this.props.history.push("/register"); // Zack's recommendation
+      }
+      // there is also a redirect function
+      //     res.json( // ADD THIS TI DIRECT BASED ON TOKEN PRESENT
+      //       {"token":token,
+      //       "token_for":req.body.email --- THIS COMES WITH LOGIN
+      // });
+    } catch(err) {  // DID ALERT and STAYED on PAGE...
+                    // DID NOT print an err or err.message!!! 
+                    // BUT this IS where we'll
+                    // handle existing email, username errors
+                    // but NOT for MVP!!!
+                    // USER already existed landed here.
+    alert("Register Page Says: Line 147", err.message); // TypeError: failed to get JSON
   }
+}
+    
 
   render() {
-    const {topLevelState} = this.props;
+    const {topLevelState, set_logged_in} = this.props;
     return (
       <div>
         <MuiThemeProvider>
@@ -261,7 +232,7 @@ class Register extends Component {
                 <TextField className='dataEntry'
                   type="phone"
                   hintText="Enter your Phone Number"
-                  floatingLabelText="phone_number"
+                  floatingLabelText="Phone Number"
                   onChange = {(event,newValue) => this.setState({phone_number:newValue})}
                 />
               </Col>
@@ -291,11 +262,10 @@ class Register extends Component {
           </Container>
           <RaisedButton 
             label="Submit"
-            // href="/home"
-            // href="#"
+            // href="/home" // Using onClick function and props.hsitory.push to get to next page
             primary={true}
             style={style}
-            onClick={(event) => this.handleClick(event, topLevelState)}
+            onClick={(event) => this.handleClick(event, topLevelState, set_logged_in)}
           />
         </div>
          </MuiThemeProvider>

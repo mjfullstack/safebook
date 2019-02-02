@@ -14,16 +14,25 @@ export default class App extends Component {
     this.state = {
       searchfield: '',
       cardClicked: '',
-      users: [],
+      friends: [],
+      im_logged_in: {}, // Object
+      logged_in_status: false // Boolean to track across app
     }
   }
-
+  setLoggedInStatus = (logged_in_status) => {
+    this.setState({logged_in_status: logged_in_status})
+    console.log("App setLoggedInStatus: What goes into im_logged_in: ", logged_in_status);
+    return ({logged_in_status: logged_in_status})
+  }
 
   setTopState = (newUser) => {
     this.setState((pvSt) => {
-      const updatedUsers = pvSt.users.concat(newUser);
+      // console.log("App setTopState: What goes into im_logged_in: ", newUser);
+      return ({im_logged_in: newUser})
+      // return this.setState({im_logged_in: newUser})
+      // const updatedUsers = pvSt.users.concat(newUser);
       // console.log("AFTER PUSH in APP.setTopState - this.state.users[0]: ", this.state.users[0]);
-      return ({users: updatedUsers})
+      // return ({users: updatedUsers})
     })
   }
 
@@ -36,11 +45,11 @@ export default class App extends Component {
   };
 
   render() {
-    console.log("AFTER PUSH in APP.render - this.state.users[0]: ", this.state.users[0]);
-    // MUST populate state.users[] from database
+    console.log("AFTER SetSTATE in APP.render - this.state.im_logged_in: ", this.state.im_logged_in);
+    // MUST populate state.Friends[] from database
     // to avoid no-persistence work-around
-    const filteredUsers = this.state.users.filter(user => {
-      return user.first_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+    const filteredFriends = this.state.friends.filter(friend => {
+      return friend.first_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
     })
     return (
       <Router>
@@ -49,24 +58,35 @@ export default class App extends Component {
             currentScore={this.state.currentScore}
             highScore={this.state.highScore}
             wonDisplayed={this.state.wonDisplayed}
-          />
+            set_logged_in={(logged_in_status) => this.setLoggedInStatus(logged_in_status)}
+            logged_in_status={this.state.logged_in_status}
+            />
 
           <Switch>
             <Route exact path="/register"
               render={(props) => <Register {...props} 
               topLevelState={(newUser) => this.setTopState(newUser)}
+              set_logged_in={(logged_in_status) => this.setLoggedInStatus(logged_in_status)}
               />}
             />
-            <Route exact path="/" component={Login} />
+            {/* <Route exact path="/" component={Login} /> */}
+            <Route exact path="/"
+              render={(props) => <Login {...props} 
+              topLevelState={(loginUser) => this.setTopState(loginUser)}
+              im_logged_in={this.state.im_logged_in}
+              set_logged_in={(logged_in_status) => this.setLoggedInStatus(logged_in_status)}
+              />}
+            />
             <Route exact path="/home" 
               render={(props) => <HomePage {...props}
               // EDGAR suggested (not req'd) ---> componentDidMount={(props) => <HomePage {...props}
-              users={filteredUsers}
+              im_logged_in={this.state.im_logged_in}
+              friends={filteredFriends}
              />}
             />
             <Route exact path="/finduser" 
               render={(props) => <FindUser {...props}
-              users={filteredUsers}
+              friends={filteredFriends}
               searchChange={(event) => this.setState({searchfield: event.target.value})}
              />}
             />

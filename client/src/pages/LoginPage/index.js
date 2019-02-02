@@ -3,7 +3,9 @@ import {Container, Row, Col} from '../../Components/Grid/';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
+// import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import API from "../../utils/API"
 import './style.css';
 
 class Login extends Component {
@@ -12,7 +14,10 @@ class Login extends Component {
     this.state={
       email: '',
       username:'',
-      password:''
+      password:'',
+      token: '',
+      logged_in_status: props.logged_in_status,
+      im_logged_in: {}
     }
   }
 
@@ -20,94 +25,80 @@ class Login extends Component {
 
   }
 
-  handleLoginClick = async (e) => {
-    const loginUser = {
-      email: this.state.email,
-      username:this.state.username,
-      password:this.state.password
+  // Loads all loggedInUser  and sets them to this.state.books
+  loadUserProfile = (loggedInUser) => {
+    // API.getUser("sericson")
+    API.getUser(loggedInUser)
+    .then((res) => { 
+      console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)
+      return ({ res }) 
+    })
+      .catch(err => console.log("LoginPage LoadUserProfile err: ", err));
+  };
 
-    }
-    /////////////////////////////////////////
-    // POST METHOD to send data to backend
-    // versus saving in state here!
-    /////////////////////////////////////////
-    e.preventDefault();
-    var getDataURL = "/api/users/login";
-    console.log("ENTRY to handleLoginClick - JSON.stringify(loginUser): ", JSON.stringify(loginUser));
-    const m = encodeURIComponent(loginUser.email);
-    const u = encodeURIComponent(loginUser.username);
-    const p = encodeURIComponent(loginUser.password);
-    const requestBody = `email=${m}&username=${u}&password=${p}`;
-    const res = await fetch(getDataURL,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-				body: requestBody
+
+  handleLoginClick = async (e, topState, set_logged_in) => { 
+    try {
+      // New Login Object
+      const loginUser = {
+        email: this.state.email,
+        username: this.state.username,
+        password: this.state.password,
+        token: this.state.token,
+        logged_in_status: this.state.logged_in_status
       }
-    )
 
-    // const res = await fetch(getDataURL,
-    //   {
-    //     method: 'POST',
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(loginUser)
-    //   }
-    // )
+      /////////////////////////////////////////
+      // POST METHOD to send data to backend
+      /////////////////////////////////////////
+      e.preventDefault();
+      var getDataURL = "/api/users/login";
+      console.log("LoginPage ENTRY to handleLoginClick - JSON.stringify(loginUser): ", JSON.stringify(loginUser));
+      const res = await fetch(getDataURL,
+        {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(loginUser)
+        }, function(error) { 
+          alert("Login Error: ",error.message);
+        }
+      )
 
-    const regRes = await res.json();
-    console.log('RegisterPage handleClick AWAIT regRes: ', regRes);
+      const regRes = await res.json();
+      console.log('LoginPage handleClick LOGIN regRes: ', regRes);
 
-/**********************
- * // https://gist.github.com/milon87/109c9263821c0c4bac959ce1b4c3357c
- * // x-www-form-urlencoded post in react native
-
-  getLoginAPI = () => {
-
-    let details = {
-        'username': 'username',
-        'password': 'demo'
-    };
-
-    let formBody = [];
-    for (let property in details) {
-        let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
+      if (regRes.token && regRes.token_for) {
+        console.log("LoginPage COMPARE this.state.email and token_for: ", this.state.email, "token_for: ", regRes.token_for);
+        loginUser.token = regRes.token;
+        if (loginUser.email === regRes.token_for) {
+          console.log("LoginPage COMPARE Matched");
+          loginUser.logged_in_status = true;
+          this.setState({logged_in_status: true})
+          console.log("LoginPage handleClick LOGIN - this.state.logged_in_status: ", this.state.logged_in_status);
+          await set_logged_in(this.state.logged_in_status)
+        }
+        console.log("LoginPage handleLoginClick loginUser.username : ", loginUser.username)
+        await this.loadUserProfile(loginUser.username);
+        // console.log('BEFORE AWAIT')
+        await topState(loginUser); //
+        // console.log('AFTER AWAIT') 
+        return this.props.history.push("/home"); // Zack's recommendation
+      } else {
+        alert("Login Failed. \nTry Re-entering credentials")
+        return this.props.history.push("/"); // Zack's recommendation
+        // there is also a redirect function
+      }
+    } catch(err) { 
+      console.log("Login Page Says: Line 94", err); // 
+      console.log("Login Page Says: Line 95", err.message); // 
     }
-    formBody = formBody.join("&");
-
-    fetch('url', {
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer token',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: formBody
-    }).then((response) => response.json())
-        .then((responseData) => {
-            console.log(responseData);
-
-
-            AlertIOS.alert(
-                "POST Response",
-                "Response Body " + JSON.stringify(responseData.role)
-            );
-        })
-        .done();
-};     
-**********/
-
-    // topState(loginUser); // MUST put in Database HERE
-    return this.props.history.push("/home"); // EDGAR workaround no persistence
-    // there is also a redirect function
-    }
-
-
+  }
 
   render() {
+    const {topLevelState, set_logged_in, logged_in_status} = this.props;
       return (
         <div>
           <MuiThemeProvider>
@@ -143,7 +134,7 @@ class Login extends Component {
                 </Col>
               </Row>
             </Container>
-              <RaisedButton label="Login" href='/home' primary={true} style={style} onClick={(event) => this.handleLoginClick(event)}/>
+              <RaisedButton label="Login" primary={true} style={style} onClick={(event) => this.handleLoginClick(event, topLevelState, set_logged_in)}/>
               <h5 className="tc f5">Not yet a member?</h5>
               <RaisedButton label="Register" href='/register' primary={true} style={style} onClick={(event) => this.handleGoToRegisterClick(event)}/>
           </div>

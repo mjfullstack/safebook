@@ -19,12 +19,14 @@
     "nodemon": "^1.18.7"
   },
   "dependencies": {
+    "@material/button": "^0.43.0",
     "bcrypt-nodejs": "0.0.3",
     "express": "^4.16.4",
     "if-env": "^1.0.4",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.7",
     "path": "^0.12.7",
-    "routes": "^2.1.0"
+    "routes": "^2.1.0",
+    "typeface-roboto": "0.0.54"
   }
 }
