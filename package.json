@@ -26,6 +26,7 @@
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.7",
     "path": "^0.12.7",
-    "routes": "^2.1.0"
+    "routes": "^2.1.0",
+    "typeface-roboto": "0.0.54"
   }
 }

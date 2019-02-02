@@ -10,14 +10,19 @@
   /* text-decoration: none; */
 }
 
-.navbar-nav > a {
-    float: none;
-    display: inline-block;
+.navbar-nav > .li {
+  text-align: center;
+  color: red;
+  float: none;
+  display: inline-block;
 }
 
 /* #winner {
   display: none;
 }
  */
-
+.mySafeHeader{
+  color: burlywood;
+  font-size: 20pt;
+}
 

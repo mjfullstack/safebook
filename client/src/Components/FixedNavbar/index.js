@@ -1,10 +1,21 @@
 import React from "react";
 import './style.css';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { MuiThemeProvider, style, createMuiTheme } from 'material-ui/styles';
 import RaisedButton from 'material-ui/RaisedButton';
+// import StepButton from 'material-ui/StepButton';
 import FlatButton from 'material-ui/FlatButton';
 import { withRouter } from "react-router-dom";
 // import { withState } from "recompose";
+import 'typeface-roboto';
+import { StepButton } from "material-ui";
+
+
+const styles = { // NOT being applied
+  buttonStyle: {
+    // backgroundColor: "#aaa",
+    backgroundColor: 'blue'
+  }
+}
 
 // const myTheme = createMuiTheme ({
 //   overrides: {
@@ -48,9 +59,15 @@ class FixedNavbar extends React.Component {
             {/* <!-- Brand and toggle get grouped for better mobile display --> */}
             {/* <div className="navbar-header"> */}
             {/* <a className='nav navbar-nav' href='/home'><h1 className='tc f1'>SafeBook</h1></a> */}
-            {/* <FlatButton value='SafeBook' className='nav navbar-nav' role='button' overrides={MuiButton= {FlatButton= {color='white'}}} onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}>safebook<h1 className='tc f1'>SafeBook</h1></FlatButton> */}
-            {/*      <FlatButton onClick={(event) => this.handleSafeBookClick(event, logged_in_status)} overrides={MuiButton= {FlatButton= {color='white', value='SafeBook', className='nav navbar-nav', }}}>safebook</FlatButton> */}
-            <RaisedButton className='nav navbar-nav' role='button' onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}><h1 className='tc f1'>SafeBook</h1></RaisedButton>
+            {/* <FlatButton theme='dark' color='black' label='SAFEBOOK' primary={true} style={style} className='nav navbar-nav tc f1 mySafeHeader' role='button' >SafeBook</FlatButton> */}
+            {/* <ul className="nav navbar-nav tc">
+              <li > {<FlatButton theme='dark' color='black' label='SAFEBOOK' primary={true} style={style} className='nav navbar-nav tc f1 mySafeHeader' role='button' >SafeBook</FlatButton>} </li>
+            </ul> */}
+                 <FlatButton label='SafeBook' centerRipple backgroundColor='blue' primary={true} style={style} className='nav navbar-nav tc f1 mySafeHeader' onClick={(event) => this.handleSafeBookClick(event, logged_in_status)} ></FlatButton>
+                 {/* <RaisedButton label='SafeBook' centerRipple backgroundColor='blue' primary={true} style={style} className='nav navbar-nav tc f1 mySafeHeader' onClick={(event) => this.handleSafeBookClick(event, logged_in_status)} ></RaisedButton> */}
+                 {/* <StepButton label='SafeBook' primary={true} style={style} className='nav navbar-nav tc f1 mySafeHeader' onClick={(event) => this.handleSafeBookClick(event, logged_in_status)} ></StepButton> */}
+                 {/* <FlatButton onClick={(event) => this.handleSafeBookClick(event, logged_in_status)} overrides={MuiButton= {FlatButton= {color='white', label='SafeBook', className='nav navbar-nav', }}}>safebook</FlatButton> */}
+            {/* <RaisedButton className='nav navbar-nav' role='button' onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}><h1 className='tc f1'>SafeBook</h1></RaisedButton> */}
             {/* <button className='nav navbar-nav' role='button' onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}><h1 className='tc f1'>SafeBook</h1></button> */}
               {/* <ul className="nav navbar-nav tc">
                 <li ><a  href='/home'><h1 className='tc f1'>SafeBook</h1></a></li> 
