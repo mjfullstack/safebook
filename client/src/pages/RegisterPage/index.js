@@ -17,7 +17,6 @@ class Register extends Component {
       username:'',
       password:'',
       token: '',
-      logged_in_status: false,
       user_pic: '',
       birthdate: '',
       age: '',
@@ -162,30 +161,32 @@ class Register extends Component {
             <h2 className='myPageTitle'> Registration</h2>
             <h4 className='myPageSubTitle'>Enter e-mail, username and password:</h4>
             <Row >
-              <Col size='md-4' margin='0rem' >
-                <TextField className='dataEntry'
-                  type="email"
-                  hintText="Enter your e-mail"
-                  floatingLabelText="e-mail"
-                  onChange = {(event,newValue) => this.setState({email:newValue})}
-                />
-              </Col>
-              <Col size='md-4' margin='0rem' >
-                <TextField className='dataEntry'
-                  type="username"
-                  hintText="Select a Username"
-                  floatingLabelText="Username"
-                  onChange = {(event,newValue) => this.setState({username:newValue})}
-                />
-              </Col>
-              <Col size='md-4' margin='0rem'>
-                <TextField className='dataEntry'
-                  type="password"
-                  hintText="Select a Password"
-                  floatingLabelText="Password"
-                  onChange = {(event,newValue) => this.setState({password:newValue})}
-                />
-              </Col>
+              {/* <form className="registerForm">  */}
+                <Col size='md-4' margin='0rem' >
+                  <TextField className='dataEntry'
+                    type="email"
+                    hintText="Enter your e-mail"
+                    floatingLabelText="e-mail"
+                    onChange = {(event,newValue) => this.setState({email:newValue})}
+                  />
+                </Col>
+                <Col size='md-4' margin='0rem' >
+                  <TextField className='dataEntry'
+                    type="username"
+                    hintText="Select a Username"
+                    floatingLabelText="Username"
+                    onChange = {(event,newValue) => this.setState({username:newValue})}
+                  />
+                </Col>
+                <Col size='md-4' margin='0rem'>
+                  <TextField className='dataEntry'
+                    type="password"
+                    hintText="Select a Password"
+                    floatingLabelText="Password"
+                    onChange = {(event,newValue) => this.setState({password:newValue})}
+                  />
+                </Col>
+              {/* </form>  */}
             </Row>
             <h4 className='myPageSubTitle'>Enter Name:</h4>
             <Row >
@@ -216,7 +217,7 @@ class Register extends Component {
                 <TextField className='dataEntry'
                   type="date"
                   hintText=""
-                  floatingLabelText="Birthdate"
+                  floatingLabelText=" " // "Birthdate"
                   onChange = {(event,newValue) => this.setState({birthdate:newValue})}
                 />
               </Col>

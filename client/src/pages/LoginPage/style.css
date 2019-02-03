@@ -6,7 +6,12 @@
   padding-top: 1rem;
   color: burlywood;
 }
+
 #dataEntry {
   /* padding-top: 7rem; */
   color: burlywood;
+}
+
+.loginForm {
+  text-align: center;
 }

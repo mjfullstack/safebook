@@ -11,12 +11,12 @@ import 'typeface-roboto';
 // import { StepButton } from "material-ui";
 
 
-const styles = { // NOT being applied
-  buttonStyle: {
-    // backgroundColor: "#aaa",
-    backgroundColor: 'blue'
-  }
-}
+// const styles = { // NOT being applied
+//   buttonStyle: {
+//     // backgroundColor: "#aaa",
+//     backgroundColor: 'blue'
+//   }
+// }
 
 // const myTheme = createMuiTheme ({
 //   overrides: {

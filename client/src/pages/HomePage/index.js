@@ -31,7 +31,7 @@ class HomePage extends React.Component {
   // componentDidMount() {
   componentWillMount() {
     this.loadUserProfile();
-    // this.loadUserProfilePosts();
+    this.loadUserProfilePosts();
   }
 
   // Loads all user profile and sets state for User
@@ -45,9 +45,9 @@ class HomePage extends React.Component {
           console.log("HOME LoadUserProfile - this.state.im_logged_in: ", this.state.im_logged_in)
         })
       )
-      .then(
-        this.loadUserProfilePosts()
-      )
+      // .then(
+      //   this.loadUserProfilePosts()
+      // )
       .catch(err => console.log(err));
   };
 
@@ -84,7 +84,7 @@ class HomePage extends React.Component {
         <MuiThemeProvider>
           <div>
             <h2 className='myPageTitle'>User's Home Page - All Your Friends!</h2>
-            <img className='tc profilePic' alt='Profile Pic Coming Soon!' src={this.state.im_logged_in.user_pic} />
+            {/* <img className='tc profilePic' alt='Profile Pic Coming Soon!' src={this.state.im_logged_in.user_pic} />
             <h5 className='userDetails'>
             Username: {this.state.im_logged_in ? this.state.im_logged_in.username : ""}
             <br />
@@ -104,7 +104,7 @@ class HomePage extends React.Component {
             <br />
             User Id: {this.state.im_logged_in ? this.state.im_logged_in.user_id : ""}
             <br />
-            </h5>
+            </h5> */}
             <RaisedButton
               label="Go To Search"
               // href='/finduser' // Need to change from href to onClick handleGoToSearchClick
@@ -113,7 +113,7 @@ class HomePage extends React.Component {
               onClick={(event) => this.handleGoToSearchClick(event)}
             />
             {/* <h1>
-              Profile - HARD CODED FROM this.state.user[0]
+              Profile - HARD CODED? FROM this.state.user[0]
             </h1>
             <h2>
               Username: {this.state.user ? this.state.user[0].username : ""}
@@ -142,9 +142,7 @@ class HomePage extends React.Component {
               // users={users}
               />
 
-            )
-
-            }
+            )}
             {this.state.posts === null && <div />}
             {this.state.posts && this.state.posts && (
               <PostsList
@@ -153,11 +151,7 @@ class HomePage extends React.Component {
                 posts={this.state.posts}
               // users={users}
               />
-
-            )
-
-            }
-            
+            )}           
           </div>
         </MuiThemeProvider>
       </div>

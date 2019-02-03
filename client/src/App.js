@@ -46,7 +46,7 @@ export default class App extends Component {
   };
 
   render() {
-    console.log("AFTER SetSTATE in APP.render - this.state.im_logged_in: ", this.state.im_logged_in);
+    // console.log("AFTER SetSTATE in APP.render - this.state.im_logged_in: ", this.state.im_logged_in);
     // MUST populate state.Friends[] from database
     // to avoid no-persistence work-around
     const filteredFriends = this.state.friends.filter(friend => {

@@ -68,7 +68,7 @@ const postsSeed = [
     },
     {
         post: "Michael is awesome.",
-        username_posted: "hppy",
+        username_posted: "happy",
         username_page: "mjohnson",
         created_date: new Date(Date.now())
     },
