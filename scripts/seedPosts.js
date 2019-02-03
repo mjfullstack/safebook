@@ -20,7 +20,72 @@ const postsSeed = [
         username_posted: "sericson",
         username_page: "mjohnson",
         created_date: new Date(Date.now())
+    },
+
+    {
+        post: "Heidi is awesome.",
+        username_posted: "billy",
+        username_page: "heidi",
+        created_date: new Date(Date.now())
+    },
+    {
+        post: "Elton is awesome.",
+        username_posted: "heidi",
+        username_page: "elton",
+        created_date: new Date(Date.now())
+    },
+    {
+        post: "Billy is awesome.",
+        username_posted: "elton",
+        username_page: "billy",
+        created_date: new Date(Date.now())
+    },
+    {
+        post: "Howdy is awesome.",
+        username_posted: "matt",
+        username_page: "howdy",
+        created_date: new Date(Date.now())
+    },
+
+    {
+        post: "Matt is awesome.",
+        username_posted: "howdy",
+        username_page: "matt",
+        created_date: new Date(Date.now())
+    },
+    {
+        post: "Happy is VERY awesome.",
+        username_posted: "mjohnson",
+        username_page: "happy",
+        created_date: new Date(Date.now())
+    },
+
+    {
+        post: "Michael is awesome.",
+        username_posted: "heidi",
+        username_page: "mjohnson",
+        created_date: new Date(Date.now())
+    },
+    {
+        post: "Michael is awesome.",
+        username_posted: "hppy",
+        username_page: "mjohnson",
+        created_date: new Date(Date.now())
+    },
+    {
+        post: "Billy is awesome.",
+        username_posted: "times",
+        username_page: "billy",
+        created_date: new Date(Date.now())
+    },
+    {
+        post: "Dolly is awesome.",
+        username_posted: "matt",
+        username_page: "dolly",
+        created_date: new Date(Date.now())
     }
+
+
 ];
 
 db.Posts

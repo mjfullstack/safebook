@@ -18,7 +18,7 @@ class HomePage extends React.Component {
       user: {},
       logged_in_status: props.logged_in_status, // Page's status
       im_logged_in: props.im_logged_in, // Using this OBJECT below
-      posts: null
+      posts: {}
     };
   }
 
@@ -30,39 +30,55 @@ class HomePage extends React.Component {
   // When the component mounts, load all user and save the state
   // componentDidMount() {
   componentWillMount() {
-      this.loadUserProfile();
-    this.loadUserProfilePosts();
+    this.loadUserProfile();
+    // this.loadUserProfilePosts();
   }
 
   // Loads all user profile and sets state for User
   loadUserProfile = () => {
-    API.getUser("sericson")
+    // API.getUser("sericson")
+    API.getUser(this.state.im_logged_in.username)
       .then(res =>
         // this.setState({ user: res.data })
-        this.setState({ user: res.data }, () => {
-          console.log(this.state.user[0])
+        this.setState({ user: res.data, im_logged_in: res.data[0] }, () => {
+          console.log("HOME LoadUserProfile - this.state.user[0]: ", this.state.user[0])
+          console.log("HOME LoadUserProfile - this.state.im_logged_in: ", this.state.im_logged_in)
         })
+      )
+      .then(
+        this.loadUserProfilePosts()
       )
       .catch(err => console.log(err));
   };
 
   // Loads all user profile and sets state for User
   loadUserProfilePosts = () => {
-    API.getPosts("sericson")
+    // API.getPosts("sericson")
+    API.getPosts(this.state.im_logged_in.username)
       .then(res =>
         // this.setState({ user: res.data })
         this.setState({ posts: res.data }, () => {
-          console.log(this.state.posts)
+          console.log("HOME LoadUserProfile - (this.state.posts: ", this.state.posts);
+          console.log("HOME LoadUserProfile - (this.state.posts[0]: ", this.state.posts[0]);
         })
       )
       .catch(err => console.log(err));
   };
 
   render() {
-    const { users } = this.props;
+    console.log(`HOME LOADED ${JSON.stringify(this.state.im_logged_in)}`)
+    console.log(`HOME LOADED ${JSON.stringify(this.state.users)}`)
+    console.log(`HOME LOADED ${JSON.stringify(this.state.posts)}`)
+    const {users  } = this.props;
     console.log("HomePage - users: ", users);
-    console.log(this.state.user)
+    console.log("HomePage - this.state.user: ", this.state.user)
     // console.log(this.state.user[0].username)
+    if (this.state.im_logged_in) {
+      console.log("HomePage this.state.im_logged_in.username: ", this.state.im_logged_in.username)
+    } else {
+      console.log("HomePage this.state.im_logged_in.username: User is not logged in.");
+      return <h1 className='tc myPageTitle' >User is not logged in!</h1>
+    }
     return (
       <div>
         <MuiThemeProvider>
@@ -97,7 +113,7 @@ class HomePage extends React.Component {
               onClick={(event) => this.handleGoToSearchClick(event)}
             />
             {/* <h1>
-              Profile
+              Profile - HARD CODED FROM this.state.user[0]
             </h1>
             <h2>
               Username: {this.state.user ? this.state.user[0].username : ""}
@@ -133,7 +149,8 @@ class HomePage extends React.Component {
             {this.state.posts && this.state.posts && (
               <PostsList
                 // users={[{username: "sericson"}]}
-                posts={[this.state.posts]}
+                // posts={[this.state.posts]}
+                posts={this.state.posts}
               // users={users}
               />
 

@@ -27,7 +27,6 @@ class Login extends Component {
 
   // Loads all loggedInUser  and sets them to this.state.books
   loadUserProfile = (loggedInUser) => {
-    // API.getUser("sericson")
     API.getUser(loggedInUser)
     .then((res) => { 
       console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)

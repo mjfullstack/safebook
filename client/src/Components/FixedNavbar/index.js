@@ -1,13 +1,14 @@
 import React from "react";
 import './style.css';
-import { MuiThemeProvider, style, createMuiTheme } from 'material-ui/styles';
-import RaisedButton from 'material-ui/RaisedButton';
+// import { MuiThemeProvider, style, createMuiTheme } from 'material-ui/styles';
+import { MuiThemeProvider, style } from 'material-ui/styles';
+// import RaisedButton from 'material-ui/RaisedButton';
 // import StepButton from 'material-ui/StepButton';
 import FlatButton from 'material-ui/FlatButton';
 import { withRouter } from "react-router-dom";
 // import { withState } from "recompose";
 import 'typeface-roboto';
-import { StepButton } from "material-ui";
+// import { StepButton } from "material-ui";
 
 
 const styles = { // NOT being applied

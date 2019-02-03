@@ -14,6 +14,7 @@ export default class App extends Component {
     this.state = {
       searchfield: '',
       cardClicked: '',
+      users: [],
       friends: [],
       im_logged_in: {}, // Object
       logged_in_status: false // Boolean to track across app
@@ -28,10 +29,10 @@ export default class App extends Component {
   setTopState = (newUser) => {
     this.setState((pvSt) => {
       // console.log("App setTopState: What goes into im_logged_in: ", newUser);
-      return ({im_logged_in: newUser})
+      const updatedUsers = pvSt.users.concat(newUser);
+      console.log("AFTER PUSH in APP.setTopState - this.state.users[0]: ", this.state.users[0]);
+      return ({im_logged_in: newUser, users: updatedUsers})
       // return this.setState({im_logged_in: newUser})
-      // const updatedUsers = pvSt.users.concat(newUser);
-      // console.log("AFTER PUSH in APP.setTopState - this.state.users[0]: ", this.state.users[0]);
       // return ({users: updatedUsers})
     })
   }
@@ -81,6 +82,7 @@ export default class App extends Component {
               render={(props) => <HomePage {...props}
               // EDGAR suggested (not req'd) ---> componentDidMount={(props) => <HomePage {...props}
               im_logged_in={this.state.im_logged_in}
+              users={this.state.users}
               friends={filteredFriends}
              />}
             />
