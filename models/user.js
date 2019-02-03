@@ -15,10 +15,12 @@ const usersSchema = new Schema({
     age: { type: Number, default: null},
     phone_number: { type: String, default: null},
     created_date: { type: Date, default: Date.now },
-    last_modified_date: { type: Date, default: Date.now }
+    last_modified_date: { type: Date, default: Date.now },
+    posts: [{
+      type: Schema.Types.ObjectId,
+      ref: "UserPosts"
+    }]
 });
-
-
 
 
 
@@ -78,4 +80,5 @@ usersSchema.pre( 'save', function ( next ) {
 
 
 const Users = mongoose.model("Users", usersSchema);
+
 module.exports = Users;

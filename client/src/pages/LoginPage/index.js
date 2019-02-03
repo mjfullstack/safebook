@@ -27,7 +27,6 @@ class Login extends Component {
 
   // Loads all loggedInUser  and sets them to this.state.books
   loadUserProfile = (loggedInUser) => {
-    // API.getUser("sericson")
     API.getUser(loggedInUser)
     .then((res) => { 
       console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)
@@ -98,7 +97,7 @@ class Login extends Component {
   }
 
   render() {
-    const {topLevelState, set_logged_in, logged_in_status} = this.props;
+    const {topLevelState, set_logged_in} = this.props;
       return (
         <div>
           <MuiThemeProvider>
@@ -110,28 +109,32 @@ class Login extends Component {
             <Container fluid='fluid'>
               <h2 className='myPageTitle'>Enter Credentials</h2>
               <Row className='dataEntry'>
-              <Col size='md-4' margin='0rem'>
-                  <TextField className='dataEntry'
-                    hintText="Enter your e-mail"
-                    floatingLabelText="e-mail"
-                    onChange = {(event,newValue) => this.setState({email:newValue})}
-                  />
-                </Col>
-                <Col size='md-4' margin='0rem'>
-                  <TextField className='dataEntry'
-                    hintText="Enter your Username"
-                    floatingLabelText="Username"
-                    onChange = {(event,newValue) => this.setState({username:newValue})}
-                  />
-                </Col>
-                <Col size='md-4' margin='0rem'>
-                  <TextField className='dataEntry'
-                    type="password"
-                    hintText="Enter your Password"
-                    floatingLabelText="Password"
-                    onChange = {(event,newValue) => this.setState({password:newValue})}
-                  />
-                </Col>
+                {/* <dialog id="login"> */}
+                  {/* <form method="dialog" className="loginForm"> */}
+                    <Col size='md-4' margin='0rem'>
+                      <TextField className='dataEntry'
+                        hintText="Enter your e-mail"
+                        floatingLabelText="e-mail"
+                        onChange = {(event,newValue) => this.setState({email:newValue})}
+                      />
+                    </Col>
+                    <Col size='md-4' margin='0rem'>
+                      <TextField className='dataEntry'
+                        hintText="Enter your Username"
+                        floatingLabelText="Username"
+                        onChange = {(event,newValue) => this.setState({username:newValue})}
+                      />
+                    </Col>
+                    <Col size='md-4' margin='0rem'>
+                      <TextField className='dataEntry'
+                        type="password"
+                        hintText="Enter your Password"
+                        floatingLabelText="Password"
+                        onChange = {(event,newValue) => this.setState({password:newValue})}
+                      />
+                    </Col>
+                  {/* </form> */}
+                {/* </dialog> */}
               </Row>
             </Container>
               <RaisedButton label="Login" primary={true} style={style} onClick={(event) => this.handleLoginClick(event, topLevelState, set_logged_in)}/>
