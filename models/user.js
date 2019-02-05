@@ -10,6 +10,7 @@ const usersSchema = new Schema({
     username: { type: String, required: true },
     password: { type: String, required: true },
     salt: { type: String, default: null},
+    user_id: { type: Number, default: null},
     user_pic: { type: String, default: null},
     birthdate: { type: String, default: null},
     age: { type: Number, default: null},
@@ -56,12 +57,9 @@ usersSchema.pre( 'save', function ( next ) {
   if (!user.created_at) {
       user.created_at = currentDate;
     }
-    console.log("SAW usersSchema.pre('save'...)!! updated at DATE: ", user.updated_at);
-
-  
 
   // Break out if the password hasn't changed
-//   if ( !user.isModified( 'password' ) ) return next();
+  //   if ( !user.isModified( 'password' ) ) return next();
 
   // Password changed so we need to hash it
   bcrypt.genSalt( 5, function ( err, salt ) {
@@ -72,11 +70,9 @@ usersSchema.pre( 'save', function ( next ) {
       user.salt = salt;
       user.password = hash;
       next();
-    } );
-
-    console.log("SAW usersSchema.pre('save'...)!! GENSALT: ", user.salt, "password: ", user.password);
-  } );
-} );
+    });
+  });
+});
 
 
 const Users = mongoose.model("Users", usersSchema);

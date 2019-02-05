@@ -22,23 +22,17 @@ export default class App extends Component {
   }
   setLoggedInStatus = (logged_in_status) => {
     this.setState({logged_in_status: logged_in_status})
-    console.log("App setLoggedInStatus: What goes into im_logged_in: ", logged_in_status);
+    console.log("App setLoggedInStatus: What goes into logged_in_status: ", logged_in_status);
     return ({logged_in_status: logged_in_status})
   }
 
   setTopState = (newUser) => {
     this.setState((pvSt) => {
-      // console.log("App setTopState: What goes into im_logged_in: ", newUser);
       const updatedUsers = pvSt.users.concat(newUser);
       console.log("AFTER PUSH in APP.setTopState - this.state.users[0]: ", this.state.users[0]);
       return ({im_logged_in: newUser, users: updatedUsers})
-      // return this.setState({im_logged_in: newUser})
-      // return ({users: updatedUsers})
     })
   }
-
-
-
 
   onSearchChange = (event) => {
     this.setState({ searchfield: event.target.value })
@@ -46,9 +40,7 @@ export default class App extends Component {
   };
 
   render() {
-    // console.log("AFTER SetSTATE in APP.render - this.state.im_logged_in: ", this.state.im_logged_in);
     // MUST populate state.Friends[] from database
-    // to avoid no-persistence work-around
     const filteredFriends = this.state.friends.filter(friend => {
       return friend.first_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
     })

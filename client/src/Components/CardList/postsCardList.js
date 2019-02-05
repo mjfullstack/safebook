@@ -9,6 +9,7 @@ const PostsCardList = ({ posts }) => {
     const postsArray = posts.map((post, i) => {
       return ( 
         <PostsCard 
+          key={ post._id }
           // post={post ? post[i].post : ''}
           // username_posted={post[i].username_posted ? post[i].username_posted : ''}
           // created_date={post[i].created_date ? post[i].created_date : ''}

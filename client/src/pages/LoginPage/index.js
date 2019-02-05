@@ -29,7 +29,7 @@ class Login extends Component {
   loadUserProfile = (loggedInUser) => {
     API.getUser(loggedInUser)
     .then((res) => { 
-      console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)
+      // console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)
       return ({ res }) 
     })
       .catch(err => console.log("LoginPage LoadUserProfile err: ", err));
@@ -52,7 +52,7 @@ class Login extends Component {
       /////////////////////////////////////////
       e.preventDefault();
       var getDataURL = "/api/users/login";
-      console.log("LoginPage ENTRY to handleLoginClick - JSON.stringify(loginUser): ", JSON.stringify(loginUser));
+      // console.log("LoginPage ENTRY to handleLoginClick - JSON.stringify(loginUser): ", JSON.stringify(loginUser));
       const res = await fetch(getDataURL,
         {
           method: 'POST',
@@ -67,19 +67,19 @@ class Login extends Component {
       )
 
       const regRes = await res.json();
-      console.log('LoginPage handleClick LOGIN regRes: ', regRes);
+      // console.log('LoginPage handleClick LOGIN regRes: ', regRes);
 
       if (regRes.token && regRes.token_for) {
-        console.log("LoginPage COMPARE this.state.email and token_for: ", this.state.email, "token_for: ", regRes.token_for);
+        // console.log("LoginPage COMPARE this.state.email and token_for: ", this.state.email, "token_for: ", regRes.token_for);
         loginUser.token = regRes.token;
         if (loginUser.email === regRes.token_for) {
-          console.log("LoginPage COMPARE Matched");
+          // console.log("LoginPage COMPARE Matched");
           loginUser.logged_in_status = true;
           this.setState({logged_in_status: true})
-          console.log("LoginPage handleClick LOGIN - this.state.logged_in_status: ", this.state.logged_in_status);
+          // console.log("LoginPage handleClick LOGIN - this.state.logged_in_status: ", this.state.logged_in_status);
           await set_logged_in(this.state.logged_in_status)
         }
-        console.log("LoginPage handleLoginClick loginUser.username : ", loginUser.username)
+        // console.log("LoginPage handleLoginClick loginUser.username : ", loginUser.username)
         await this.loadUserProfile(loginUser.username);
         // console.log('BEFORE AWAIT')
         await topState(loginUser); //
