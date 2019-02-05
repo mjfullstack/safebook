@@ -16,6 +16,7 @@ export default class App extends Component {
       cardClicked: '',
       users: [], // Logged in user in [0], only used array location
       friends: [],
+      all_users: [],
       // im_logged_in: {}, // Object
       logged_in_status: false // Boolean to track across app
     }
@@ -29,9 +30,10 @@ export default class App extends Component {
   setTopState = (newUser) => {
     this.setState((pvSt) => {
       const updatedUsers = pvSt.users.concat(newUser);
-      console.log("AFTER PUSH in APP.setTopState - this.state.users[0]: ", this.state.users[0]);
-      // return ({im_logged_in: newUser, users: updatedUsers})
-      return ({users: updatedUsers})
+      const updatedAllUsers = pvSt.all_users.concat(newUser.all_users);
+      console.log("Just BEFORE PUSH in APP.setTopState - updatedUsers: ", updatedUsers);
+      console.log("Just BEFORE PUSH in APP.setTopState - updatedAllUsers: ", updatedAllUsers);
+      return ({users: updatedUsers, all_users: updatedAllUsers})
     })
   }
 
@@ -79,6 +81,7 @@ export default class App extends Component {
               im_logged_in={this.state.users[0]}
               users={this.state.users}
               friends={filteredFriends}
+              all_users={this.state.all_users}
              />}
             />
             <Route exact path="/finduser" 

@@ -20,7 +20,7 @@ class Register extends Component {
       token: '',
       user_pic: '',
       user_id: '',
-      id: '',
+      // id: '',
       birthdate: '',
       age: '',
       phone_number: '',
@@ -76,7 +76,7 @@ class Register extends Component {
         birthdate: this.state.birthdate,
         age: this.state.age,
         phone_number: this.state.phone_number,
-        id: '',
+        all_users: this.state.all_users,
         pictures: []
       }
       // console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
@@ -86,17 +86,10 @@ class Register extends Component {
       /////////////////////////////////////////
       API.getAllUsers()
       .then( async (resGet) => {
-        this.setState({ all_users: resGet.data })
-        // this.setState({ user: res.data, im_logged_in: res.data[0] }, () => {
-        //   console.log("HOME LoadUserProfile - this.state.user[0]: ", this.state.user[0])
-        //   console.log("HOME LoadUserProfile - this.state.im_logged_in: ", this.state.im_logged_in)
-        // })
-        // const getAllRes = resGet.json();
-        // console.log("RegisterPage handleClick GET ALL USERS getAllRes: ", resGet);
-        const newUserNewID = resGet.data.length + 1;
+        this.setState({ all_users: resGet.data });
+        console.log("REGISTER PAGE getAllUsers - this.state.all_users",this.state.all_users);
         newUser.user_id = resGet.data.length + 1;
-        console.log(`RegisterPage handleClick newUserNewID (ARRAY LENGTH) ${newUserNewID}`);  
-        console.log(`RegisterPage handleClick newUser.user_id (ARRAY LENGTH) ${newUser.user_id}`);  
+        // console.log(`RegisterPage handleClick newUser.user_id (ARRAY LENGTH) ${newUser.user_id}`);  
 
         /////////////////////////////////////////
         // POST METHOD to send data to backend
@@ -117,7 +110,8 @@ class Register extends Component {
           user_pic: newUser.user_pic,
           birthdate: newUser.birthdate,
           age: newUser.age,
-          phone_number: newUser.phone_number
+          phone_number: newUser.phone_number,
+          // all_users: newUser.all_users // Array of objects... Friends will be just list of IDs
         }
         // console.log("handleClick - requestBody: ", requestBody);
         const res = await fetch(postDataURL,

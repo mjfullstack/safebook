@@ -4,7 +4,7 @@ import React from 'react'; // Required for JSX i.e. <div> below is
 const Card = (props) => {  
   const { 
           user_id, 
-          id,
+          // id,
           first_name,
           middle_name,
           last_name,
@@ -29,7 +29,6 @@ const Card = (props) => {
           Age: {age}<br />
           BirthDate: {birthdate}<br />
           User ID: {user_id}<br />
-          old id ID: {id}<br />
       </h6>
     </div>
   )

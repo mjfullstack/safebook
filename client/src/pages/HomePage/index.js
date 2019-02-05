@@ -11,9 +11,9 @@ class HomePage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      user: props.users,
+      user: props.users, // Logged In Individual
       logged_in_status: props.logged_in_status, // Page's status
-      // im_logged_in: props.im_logged_in, // Using this OBJECT below
+      all_users: props.all_users, // Everyone in DB for now!
       posts: {}
     };
   }
@@ -108,12 +108,12 @@ class HomePage extends React.Component {
               />
             )} 
             {this.state.user === null && <div />}
-            {/* {this.state.user && this.state.user.length && 
+            {this.state.user && this.state.user.length && 
             <h1>All Users List</h1> && (
               <CardList
-                users={[this.state.all_users]}
+                users={this.state.all_users}
               />
-            )} */}
+            )}
           </div>
         </MuiThemeProvider>
       </div>
