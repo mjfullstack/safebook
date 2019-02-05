@@ -14,9 +14,9 @@ export default class App extends Component {
     this.state = {
       searchfield: '',
       cardClicked: '',
-      users: [],
+      users: [], // Logged in user in [0], only used array location
       friends: [],
-      im_logged_in: {}, // Object
+      // im_logged_in: {}, // Object
       logged_in_status: false // Boolean to track across app
     }
   }
@@ -30,7 +30,8 @@ export default class App extends Component {
     this.setState((pvSt) => {
       const updatedUsers = pvSt.users.concat(newUser);
       console.log("AFTER PUSH in APP.setTopState - this.state.users[0]: ", this.state.users[0]);
-      return ({im_logged_in: newUser, users: updatedUsers})
+      // return ({im_logged_in: newUser, users: updatedUsers})
+      return ({users: updatedUsers})
     })
   }
 
@@ -66,14 +67,16 @@ export default class App extends Component {
             <Route exact path="/"
               render={(props) => <Login {...props} 
               topLevelState={(loginUser) => this.setTopState(loginUser)}
-              im_logged_in={this.state.im_logged_in}
+              // im_logged_in={this.state.im_logged_in}
+              im_logged_in={this.state.user}
               set_logged_in={(logged_in_status) => this.setLoggedInStatus(logged_in_status)}
               />}
             />
             <Route exact path="/home" 
               render={(props) => <HomePage {...props}
               // EDGAR suggested (not req'd) ---> componentDidMount={(props) => <HomePage {...props}
-              im_logged_in={this.state.im_logged_in}
+              // im_logged_in={this.state.im_logged_in}
+              im_logged_in={this.state.users[0]}
               users={this.state.users}
               friends={filteredFriends}
              />}

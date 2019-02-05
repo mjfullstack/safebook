@@ -17,7 +17,7 @@ class Login extends Component {
       password:'',
       token: '',
       logged_in_status: props.logged_in_status,
-      im_logged_in: {}
+      // im_logged_in: {}
     }
   }
 
