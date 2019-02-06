@@ -87,6 +87,7 @@ export default class App extends Component {
             <Route exact path="/finduser" 
               render={(props) => <FindUser {...props}
               friends={filteredFriends}
+              all_users={this.state.all_users}
               searchChange={(event) => this.setState({searchfield: event.target.value})}
              />}
             />
