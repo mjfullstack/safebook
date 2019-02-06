@@ -12,19 +12,44 @@ import CardList from "../../Components/CardList";
 // };
 
 class FindUser extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchfield: '',
+      cardClicked: '',
+      user: props.users, // Logged In Individual
+      friends: [],
+      all_users: props.all_users,
+      // im_logged_in: {}, // Object
+      logged_in_status: false // Boolean to track across app
+    }
+  }
+
+  onSearchChange = (event) => {
+    this.setState({ searchfield: event.target.value })
+    console.log("FIND USER event.target.value: ", event.target.value);
+    console.log("FIND USER this.state.searchfield: ", this.state.searchfield);
+  };
+
+
   render() {
-    const { users, searchChange } = this.props;
-    console.log("FindUserPage - users: ", users);
+    const { users, searchChange, all_users } = this.props;
+    console.log("FindUserPage - all_users: ", all_users);
+    const filteredAllUsers = this.state.all_users.filter(foundUser => {
+      return foundUser.first_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+    })
+
     return (
       <div>
         <MuiThemeProvider>
           <div>
             <h2 className='myPageTitle'>Find User - Type Letters to Search Names...</h2>
             <SearchBox
-              searchChange={searchChange}
+              // searchChange={searchChange} // Root App.onSearchChange
+              searchChange={this.onSearchChange}
             />
             <CardList
-              users={users}
+              users={filteredAllUsers}
             />
           </div>
         </MuiThemeProvider>

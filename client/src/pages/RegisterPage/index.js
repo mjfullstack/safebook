@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import API from "../../utils/API"
 import './style.css';
 
 class Register extends Component {
@@ -18,10 +19,11 @@ class Register extends Component {
       password:'',
       token: '',
       user_pic: '',
+      user_id: '',
+      // id: '',
       birthdate: '',
       age: '',
       phone_number: '',
-      id: 0,
       pictures: [],
       logged_in_status: props.logged_in_status,
       imageURL: ''
@@ -29,10 +31,10 @@ class Register extends Component {
   }
 
   uploadFile = async e => {
-    console.log(`uploading file...`)
+    // console.log(`uploading file...`)
     const files = e.target.files;
-    console.log("uploadFile - e.target.files: ", e.target.files);
-    console.log("uploadFile - files: ", files);
+    // console.log("uploadFile - e.target.files: ", e.target.files);
+    // console.log("uploadFile - files: ", files);
     const data = new FormData();
     data.append('file', files[0]);
     data.append('upload_preset', 'safebook');
@@ -46,17 +48,18 @@ class Register extends Component {
       }
     )
     const file = await res.json();
-    console.log(file);
+    // console.log(file);
     this.setState({
       imageURL: file.secure_url,
     });
   }
 
   displayResults = (data) => {
-    console.log("handleClick - displayResults Got CALLED: ", data);
+    // console.log("handleClick - displayResults Got CALLED: ", data);
   };
 
   handleClick = async (e, topState, set_logged_in) => { 
+    e.preventDefault();
     try {
       // New User Object
       const newUser = {
@@ -73,69 +76,85 @@ class Register extends Component {
         birthdate: this.state.birthdate,
         age: this.state.age,
         phone_number: this.state.phone_number,
-        id: this.state.id + 1,
+        all_users: this.state.all_users,
         pictures: []
       }
+      // console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
 
       /////////////////////////////////////////
-      // POST METHOD to send data to backend
+      // GET METHOD to retrieve ALL usersdata to backend
       /////////////////////////////////////////
-      e.preventDefault();
-      var getDataURL = "/api/users/register";
-      console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
+      API.getAllUsers()
+      .then( async (resGet) => {
+        this.setState({ all_users: resGet.data });
+        console.log("REGISTER PAGE getAllUsers - this.state.all_users",this.state.all_users);
+        newUser.user_id = resGet.data.length + 1;
+        // console.log(`RegisterPage handleClick newUser.user_id (ARRAY LENGTH) ${newUser.user_id}`);  
 
-      // This IS what gets put into the Mongo DB at the backend
-      const requestBody = { 
-        first_name: newUser.first_name,
-        middle_name: newUser.middle_name,
-        last_name: newUser.last_name,
-        email: newUser.email,
-        username: newUser.username,
-        password: newUser.password,
-        token: newUser.token,
-        logged_in_status: newUser.logged_in_status,
-        user_id: newUser.user_id,
-        user_pic: newUser.user_pic,
-        birthdate: newUser.birthdate,
-        age: newUser.age,
-        phone_number: newUser.phone_number
-      }
-      console.log("handleClick - requestBody: ", requestBody);
-      const res = await fetch(getDataURL,
-        {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(requestBody)
-        }, function(error) { 
-          alert("Registration Error: ",error.message);
+        /////////////////////////////////////////
+        // POST METHOD to send data to backend
+        /////////////////////////////////////////
+        var postDataURL = "/api/users/register";
+
+        // This IS what gets put into the Mongo DB at the backend
+        const requestBody = { 
+          first_name: newUser.first_name,
+          middle_name: newUser.middle_name,
+          last_name: newUser.last_name,
+          email: newUser.email,
+          username: newUser.username,
+          password: newUser.password,
+          token: newUser.token,
+          logged_in_status: newUser.logged_in_status,
+          user_id: newUser.user_id,
+          user_pic: newUser.user_pic,
+          birthdate: newUser.birthdate,
+          age: newUser.age,
+          phone_number: newUser.phone_number,
+          // all_users: newUser.all_users // Array of objects... Friends will be just list of IDs
         }
-      )
+        // console.log("handleClick - requestBody: ", requestBody);
+        const res = await fetch(postDataURL,
+          {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+          }, function(error) { 
+            alert("Registration Error: ",error.message);
+          }
+        )
 
-      const regRes = await res.json();
-      console.log("regRes: ", regRes);
-      console.log(`RegisterPage handleClick SUBMIT: regRes.success ${regRes.success}, regRes.data.token: ${regRes.data.token}`);
+        const regRes = await res.json();
+        // console.log("regRes: ", regRes);
+        // console.log(`RegisterPage handleClick SUBMIT: regRes.success ${regRes.success}, regRes.data.token: ${regRes.data.token}`);
 
-      if (regRes.data.token && regRes.success) {
-        newUser.token = regRes.data.token;
-        newUser.logged_in_status = regRes.success;
-        this.setState({logged_in_status: newUser.logged_in_status})
-        console.log("RegisterPage handleClick SUBMIT - this.state.logged_in_status: ", this.state.logged_in_status);
-        await set_logged_in(this.state.logged_in_status)
+        if (regRes.data.token && regRes.success) {
+          newUser.token = regRes.data.token;
+          newUser.logged_in_status = regRes.success;
+          this.setState({logged_in_status: newUser.logged_in_status})
+          // console.log("RegisterPage handleClick SUBMIT - this.state.logged_in_status: ", this.state.logged_in_status);
+          await set_logged_in(this.state.logged_in_status)
 
-        await topState(newUser); 
-        return this.props.history.push("/home"); // Zack's recommendation
-      } else {
-        alert("Registration Failed. Already Registered?\nTry Logging In")
-        return this.props.history.push("/register"); // Zack's recommendation
-      }
-      // there is also a redirect function
-      //     res.json( // ADD THIS TI DIRECT BASED ON TOKEN PRESENT
-      //       {"token":token,
-      //       "token_for":req.body.email --- THIS COMES WITH LOGIN
-      // });
+          await topState(newUser); 
+          return this.props.history.push("/home"); // Zack's recommendation
+        } else {
+          alert("Registration Failed. Already Registered?\nTry Logging In")
+          return this.props.history.push("/register"); // Zack's recommendation
+        }
+        // there is also a redirect function
+        //     res.json( // ADD THIS TI DIRECT BASED ON TOKEN PRESENT
+        //       {"token":token,
+        //       "token_for":req.body.email --- THIS COMES WITH LOGIN
+        // });
+      })
+      // .then(
+      //   this.loadUserProfilePosts()
+      // )
+      .catch(err => console.log(err));
+
     } catch(err) {  // DID ALERT and STAYED on PAGE...
                     // DID NOT print an err or err.message!!! 
                     // BUT this IS where we'll

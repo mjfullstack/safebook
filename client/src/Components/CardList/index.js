@@ -4,10 +4,11 @@ import Card from '../Card';
 
 const CardList = ({ users }) => {
   console.log("CardList -- Users: ", users)
-  const cardArray = users.map((user, id) => {
+  const cardArray = users.map((user, idx) => {
     return ( 
       <Card 
-        id={user.id} 
+        // id={user.id} // Intent?
+        key={idx }
         first_name={user.first_name} 
         middle_name={user.middle_name} 
         last_name={user.last_name} 
@@ -16,6 +17,7 @@ const CardList = ({ users }) => {
         birthdate={user.birthdate}
         age={user.age}
         user_pic={user.user_pic}
+        user_id={user.user_id}
         email={user.email}
         
       />

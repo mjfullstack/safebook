@@ -17,7 +17,7 @@ class Login extends Component {
       password:'',
       token: '',
       logged_in_status: props.logged_in_status,
-      im_logged_in: {}
+      all_users: []
     }
   }
 
@@ -29,7 +29,7 @@ class Login extends Component {
   loadUserProfile = (loggedInUser) => {
     API.getUser(loggedInUser)
     .then((res) => { 
-      console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)
+      // console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)
       return ({ res }) 
     })
       .catch(err => console.log("LoginPage LoadUserProfile err: ", err));
@@ -44,7 +44,8 @@ class Login extends Component {
         username: this.state.username,
         password: this.state.password,
         token: this.state.token,
-        logged_in_status: this.state.logged_in_status
+        logged_in_status: this.state.logged_in_status,
+        all_users: this.state.all_users
       }
 
       /////////////////////////////////////////
@@ -52,7 +53,7 @@ class Login extends Component {
       /////////////////////////////////////////
       e.preventDefault();
       var getDataURL = "/api/users/login";
-      console.log("LoginPage ENTRY to handleLoginClick - JSON.stringify(loginUser): ", JSON.stringify(loginUser));
+      // console.log("LoginPage ENTRY to handleLoginClick - JSON.stringify(loginUser): ", JSON.stringify(loginUser));
       const res = await fetch(getDataURL,
         {
           method: 'POST',
@@ -67,24 +68,35 @@ class Login extends Component {
       )
 
       const regRes = await res.json();
-      console.log('LoginPage handleClick LOGIN regRes: ', regRes);
+      // console.log('LoginPage handleClick LOGIN regRes: ', regRes);
 
       if (regRes.token && regRes.token_for) {
-        console.log("LoginPage COMPARE this.state.email and token_for: ", this.state.email, "token_for: ", regRes.token_for);
+        // console.log("LoginPage COMPARE this.state.email and token_for: ", this.state.email, "token_for: ", regRes.token_for);
         loginUser.token = regRes.token;
         if (loginUser.email === regRes.token_for) {
-          console.log("LoginPage COMPARE Matched");
+          // console.log("LoginPage COMPARE Matched");
           loginUser.logged_in_status = true;
-          this.setState({logged_in_status: true})
-          console.log("LoginPage handleClick LOGIN - this.state.logged_in_status: ", this.state.logged_in_status);
-          await set_logged_in(this.state.logged_in_status)
+          await this.setState({logged_in_status: true})
+          // console.log("LoginPage handleClick LOGIN - this.state.logged_in_status: ", this.state.logged_in_status);
+          await set_logged_in(this.state.logged_in_status);
+          /////////////////////////////////////////
+          // GET METHOD to retrieve ALL usersdata to backend
+          /////////////////////////////////////////
+          API.getAllUsers()
+          .then( async (resGet) => {
+            this.setState({ all_users: resGet.data });
+            console.log("LOGIN PAGE getAllUsers - this.state.all_users", this.state.all_users);
+
+            // console.log("LoginPage handleLoginClick loginUser.username : ", loginUser.username)
+            await this.loadUserProfile(loginUser.username);
+            // console.log('BEFORE AWAIT')
+            loginUser.all_users = this.state.all_users;
+            await topState(loginUser); //
+            // console.log('AFTER AWAIT') 
+            return this.props.history.push("/home"); // Zack's recommendation
+          })
+          .catch(err => console.log(err));
         }
-        console.log("LoginPage handleLoginClick loginUser.username : ", loginUser.username)
-        await this.loadUserProfile(loginUser.username);
-        // console.log('BEFORE AWAIT')
-        await topState(loginUser); //
-        // console.log('AFTER AWAIT') 
-        return this.props.history.push("/home"); // Zack's recommendation
       } else {
         alert("Login Failed. \nTry Re-entering credentials")
         return this.props.history.push("/"); // Zack's recommendation

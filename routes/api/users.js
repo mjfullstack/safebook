@@ -154,11 +154,12 @@ router.post('/register', function(req, res) {
                 user.email =     req.body.email;
                 user.username =  req.body.username || 'none';
                 user.password =  req.body.password;
+                user.user_id =  req.body.user_id;
                 user.user_pic =  req.body.user_pic;
                 user.birthdate =  req.body.birthdate;
                 user.age =  req.body.age;
                 user.phone_number = req.body.phone_number || 5555555555;
-
+                console.log("ROUTE API USERS user: ", user);
                 user.save(function(err) {
                     if (err) {
                         res.json({
@@ -230,7 +231,9 @@ router.route("/home/:username")
 // Get All Users
 router.route("/allusers")
     .get(usersController.findAll);
-
+// router.get('/allusers', function(req, res) {
+//     console.log("SAW get /allusers!! req.body: ", req.body);
+    
 // Get Users by ID
 // router
 //     .route("/:id")

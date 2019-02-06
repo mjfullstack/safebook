@@ -3,7 +3,8 @@ import React from 'react'; // Required for JSX i.e. <div> below is
 
 const Card = (props) => {  
   const { 
-          id, 
+          user_id, 
+          // id,
           first_name,
           middle_name,
           last_name,
@@ -17,7 +18,7 @@ const Card = (props) => {
         } = props;
   return ( // return ONE component i.e. div
     <div>
-      <h1>Profile</h1>
+      {/* <h1>Profile</h1> */}
       <img className='tc profilePic' alt='Profile Pic Coming Soon!' src={user_pic} />
       <h6>
           Username: {username}<br />
@@ -27,7 +28,7 @@ const Card = (props) => {
           Email: {email}<br />
           Age: {age}<br />
           BirthDate: {birthdate}<br />
-          User ID: {id}<br />
+          User ID: {user_id}<br />
       </h6>
     </div>
   )
@@ -40,7 +41,7 @@ export default Card;
 //        <div className="card-body">
 //           <p className="card-title">{first_name} {middle_name} {last_name}</p>
 //           <p>Username: {username}</p>
-//           <p>ID: {id}</p>
+//           <p>User ID: {user_id}</p>
 //           <p>Birth Date:{birthdate}</p>
 //           <p>Age: {age}</p>
 //           {/* <p className="tl">e-mail: {email}</p> */}

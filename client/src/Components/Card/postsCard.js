@@ -10,7 +10,7 @@ const PostsCard = (props) => {
         } = props;
   return ( // return ONE component i.e. div
     <div>
-      <h4>Posts</h4>
+      {/* <h4>Posts</h4> */}
           <h6>Post: {post}</h6>
           <h6>Post By: {username_posted}</h6>
           <h6>Post Date: {created_date}</h6><br />
