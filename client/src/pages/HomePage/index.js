@@ -108,6 +108,7 @@ class HomePage extends React.Component {
               />
             )} 
             {this.state.user === null && <div />}
+            {/* {console.log("Just B4 ALL users CardList: ", thislstate.all_users);} */}
             {this.state.user && this.state.user.length && 
             <h1>All Users List</h1> && (
               <CardList

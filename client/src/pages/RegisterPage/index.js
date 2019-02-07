@@ -26,6 +26,7 @@ class Register extends Component {
       phone_number: '',
       pictures: [],
       logged_in_status: props.logged_in_status,
+      all_users: [],
       imageURL: ''
     };
   }
@@ -89,7 +90,12 @@ class Register extends Component {
         this.setState({ all_users: resGet.data });
         console.log("REGISTER PAGE getAllUsers - this.state.all_users",this.state.all_users);
         newUser.user_id = resGet.data.length + 1;
+
         // console.log(`RegisterPage handleClick newUser.user_id (ARRAY LENGTH) ${newUser.user_id}`);  
+        // console.log('BEFORE AWAIT')
+        newUser.all_users = resGet.data;
+        // await topState(newUser); //
+        // console.log('AFTER AWAIT') 
 
         /////////////////////////////////////////
         // POST METHOD to send data to backend
@@ -111,7 +117,6 @@ class Register extends Component {
           birthdate: newUser.birthdate,
           age: newUser.age,
           phone_number: newUser.phone_number,
-          // all_users: newUser.all_users // Array of objects... Friends will be just list of IDs
         }
         // console.log("handleClick - requestBody: ", requestBody);
         const res = await fetch(postDataURL,
@@ -275,7 +280,7 @@ class Register extends Component {
             <Row >
               <Col size='md-4' margin='2rem' />
               <Col size='md-4' margin='2rem' >
-                {this.state.imageURL && <img className='pa4' src={this.state.imageURL} alt="Upload Preview" width="200" height='200'/>}
+                {this.state.imageURL && <img className='pa4' src={this.state.imageURL} alt="Upload Preview" width="auto" height='200'/>}
               </Col>
               <Col size='md-4' margin='2rem' />
             </Row>

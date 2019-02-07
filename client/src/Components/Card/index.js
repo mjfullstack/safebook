@@ -19,7 +19,7 @@ const Card = (props) => {
   return ( // return ONE component i.e. div
     <div>
       {/* <h1>Profile</h1> */}
-      <img className='tc profilePic' alt='Profile Pic Coming Soon!' src={user_pic} />
+      <img className='tc profilePic' alt='Profile Pic Coming Soon!' src={user_pic} width="auto" height='200'/>
       <h6>
           Username: {username}<br />
           First Name: {first_name}<br />
