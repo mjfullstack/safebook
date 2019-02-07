@@ -4,6 +4,7 @@ import Card from '../Card';
 
 const CardList = ({ users }) => {
   console.log("CardList -- Users: ", users)
+  // const { getFullName } = props;
   const cardArray = users.map((user, idx) => {
     return ( 
       <Card 
@@ -12,6 +13,7 @@ const CardList = ({ users }) => {
         first_name={user.first_name} 
         middle_name={user.middle_name} 
         last_name={user.last_name} 
+        full_name = {getFullName(user)}
         username={user.username} 
         password={user.password} 
         birthdate={user.birthdate}

@@ -20,7 +20,6 @@ class Register extends Component {
       token: '',
       user_pic: '',
       user_id: '',
-      // id: '',
       birthdate: '',
       age: '',
       phone_number: '',

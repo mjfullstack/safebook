@@ -70,7 +70,7 @@ class HomePage extends React.Component {
     // console.log(`HOME LOADED this.state.im_logged_in: ${JSON.stringify(this.state.im_logged_in)}`)
     // console.log(`HOME LOADED this.state.user: ${JSON.stringify(this.state.user)}`)
     // console.log(`HOME LOADED this.state.posts ${JSON.stringify(this.state.posts)}`)
-    const {users, logged_in_status} = this.props;
+    const {users, getFullName, logged_in_status} = this.props;
     console.log("HomePage - this.props.users: ", users);
     console.log("HomePage - this.state.user: ", this.state.user)
     // if (this.state.im_logged_in) {
@@ -96,7 +96,7 @@ class HomePage extends React.Component {
             <h1>Profile</h1> && (
               <CardList
                 users={[this.state.user[0]]} // Equal to im_logged_in
-                // users={[users[0]]} // Equal to im_logged_in
+                getFullName={getFullName}
               />
             )}
             {this.state.posts === null && <div />}
@@ -112,6 +112,7 @@ class HomePage extends React.Component {
             <h1>All Users List</h1> && (
               <CardList
                 users={this.state.all_users}
+                getFullName={getFullName}
               />
             )}
           </div>

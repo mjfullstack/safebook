@@ -42,6 +42,10 @@ export default class App extends Component {
     console.log("event.target.value: ", event.target.value);
   };
 
+  getFullName = (nameParts) => {
+    return (nameParts.first_name + ' ' + nameParts.middle_name ? nameParts.middle_name : '' + ' ' + nameParts.last_name);
+  }
+    
   render() {
     // MUST populate state.Friends[] from database
     const filteredFriends = this.state.friends.filter(friend => {
@@ -76,8 +80,7 @@ export default class App extends Component {
             />
             <Route exact path="/home" 
               render={(props) => <HomePage {...props}
-              // EDGAR suggested (not req'd) ---> componentDidMount={(props) => <HomePage {...props}
-              // im_logged_in={this.state.im_logged_in}
+              getFullName={(profile) =>this.getFullName(profile)}
               im_logged_in={this.state.users[0]}
               users={this.state.users}
               friends={filteredFriends}
