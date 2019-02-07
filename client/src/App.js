@@ -7,6 +7,14 @@ import HomePage from "./pages/HomePage";
 import NoMatch from "./pages/NoMatch";
 import './App.css';
 import FixedNavbar from './Components/FixedNavbar';
+import { MuiThemeProvider, style } from '@material-ui/core/styles/MuiThemeProvider';
+import { createMuiTheme } from '@material-ui/core/styles';
+import indigo from '@material-ui/core/colors/indigo';
+import pink from '@material-ui/core/colors/pink';
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 export default class App extends Component {
   constructor() {
@@ -21,6 +29,7 @@ export default class App extends Component {
       logged_in_status: false // Boolean to track across app
     }
   }
+
   setLoggedInStatus = (logged_in_status) => {
     this.setState({logged_in_status: logged_in_status})
     console.log("App setLoggedInStatus: What goes into logged_in_status: ", logged_in_status);
@@ -43,6 +52,23 @@ export default class App extends Component {
   };
 
   render() {
+    const theme = createMuiTheme({
+      typography: {
+          useNextVariants: true,
+        },
+        palette: {
+        primary: indigo,
+        secondary: pink,
+        error: red,
+        // Used by `getContrastText()` to maximize the contrast between the background and
+        // the text.
+        contrastThreshold: 3,
+        // Used to shift a color's luminance by approximately
+        // two indexes within its tonal palette.
+        // E.g., shift from Red 500 to Red 300 or Red 700.
+        tonalOffset: 0.2,
+      }
+    });
     // MUST populate state.Friends[] from database
     const filteredFriends = this.state.friends.filter(friend => {
       return friend.first_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
@@ -50,7 +76,7 @@ export default class App extends Component {
     return (
       <Router>
         <div className='tc'> {/** tc = tachyon text-align: center;  **/}
-          <FixedNavbar
+          <FixedNavbar theme={theme}
             currentScore={this.state.currentScore}
             highScore={this.state.highScore}
             wonDisplayed={this.state.wonDisplayed}
@@ -58,6 +84,9 @@ export default class App extends Component {
             logged_in_status={this.state.logged_in_status}
             />
 
+          <MuiThemeProvider  >
+            <RaisedButton color="primary">some text </RaisedButton> 
+          </MuiThemeProvider>
           <Switch>
             <Route exact path="/register"
               render={(props) => <Register {...props} 

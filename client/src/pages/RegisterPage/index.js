@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import {Container, Row, Col} from '../../Components/Grid/';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { MuiThemeProvider } from '@material-ui/core/styles/MuiThemeProvider';
 // import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import API from "../../utils/API"
 import './style.css';
+
+// import { theme } from "../../theme.js";
 
 class Register extends Component {
   constructor(props){
@@ -168,9 +170,13 @@ class Register extends Component {
 
   render() {
     const {topLevelState, set_logged_in} = this.props;
+    const { theme } = this.props.context;
+    console.log("REGISTER: this.props.context: ", this.props.context);
+
     return (
       <div>
-        <MuiThemeProvider>
+     <MuiThemeProvider >
+        {/* <MuiThemeProvider theme={theme}> */}
           <div>
           {/* <AppBar
              title="Login"

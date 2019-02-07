@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import {Container, Row, Col} from '../../Components/Grid/';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { MuiThemeProvider } from '@material-ui/core/styles/MuiThemeProvider';
 // import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 // import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import API from "../../utils/API"
 import './style.css';
+// import * as theme "../../theme.js";
 
 class Login extends Component {
   constructor(props){
@@ -112,8 +113,9 @@ class Login extends Component {
     const {topLevelState, set_logged_in} = this.props;
       return (
         <div>
-          <MuiThemeProvider>
-            <div>
+        <MuiThemeProvider >
+          <div>
+        {/* <MuiThemeProvider theme={theme}> */}
             {/* <AppBar
               title="Login"
             /> */}

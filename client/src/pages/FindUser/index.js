@@ -1,10 +1,11 @@
 import React from "react";
 // import {Container, Row, Col} from '../../Components/Grid/';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { MuiThemeProvider, style } from '@material-ui/core/styles/MuiThemeProvider';
 import SearchBox from "../../Components/SearchBox";
 import './style.css';
 import CardList from "../../Components/CardList";
 
+// import { theme } from "../../theme.js";
 
 // const onSearchChange = (event) => {
 //   this.setState({ searchfield: event.target.value })
@@ -41,7 +42,7 @@ class FindUser extends React.Component {
 
     return (
       <div>
-        <MuiThemeProvider>
+     <MuiThemeProvider >
           <div>
             <h2 className='myPageTitle'>Find User - Type Letters to Search Names...</h2>
             <SearchBox

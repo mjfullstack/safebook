@@ -1,11 +1,13 @@
 import React from "react";
 // import {Container, Row, Col} from '../../Components/Grid/';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { MuiThemeProvider } from '@material-ui/core/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import './style.css';
 import CardList from "../../Components/CardList";
 import PostsList from "../../Components/CardList/postsCardList"
 import API from "../../utils/API"
+
+// import { theme } from "../../theme.js";
 
 class HomePage extends React.Component {
   constructor(props){
@@ -82,7 +84,7 @@ class HomePage extends React.Component {
     }
     return (
       <div>
-        <MuiThemeProvider>
+     <MuiThemeProvider >
           <div>
             <h2 className='myPageTitle'>User's Home Page - All Your Friends!</h2>
             <RaisedButton

@@ -1,16 +1,16 @@
 .myPageTitle {
   padding-top: 7rem;
+  /* color: red; */
 }
 
 .myPageSubTitle {
   padding-top: 1rem;
-  color: burlywood;
+  /* color: burlywood; */
 }
 
-#dataEntry {
-  /* padding-top: 7rem; */
+/* #dataEntry {
   color: burlywood;
-}
+} */
 
 .loginForm {
   text-align: center;

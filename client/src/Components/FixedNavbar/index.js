@@ -1,7 +1,7 @@
 import React from "react";
 import './style.css';
-// import { MuiThemeProvider, style, createMuiTheme } from 'material-ui/styles';
-import { MuiThemeProvider, style } from 'material-ui/styles';
+import { MuiThemeProvider, style } from '@material-ui/core/styles/MuiThemeProvider';
+
 // import RaisedButton from 'material-ui/RaisedButton';
 // import StepButton from 'material-ui/StepButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -9,6 +9,7 @@ import { withRouter } from "react-router-dom";
 // import { withState } from "recompose";
 import 'typeface-roboto';
 // import { StepButton } from "material-ui";
+// import { theme } from "../../theme.js";
 
 
 // const styles = { // NOT being applied
@@ -53,8 +54,8 @@ class FixedNavbar extends React.Component {
     // console.log(`wonDisplayed: ${wonDisplayed}`);
   return (
     <div>
-     {/* <MuiThemeProvider theme={myTheme}> */}
-     <MuiThemeProvider>
+     {/* <MuiThemeProvider theme={theme}> */}
+     <MuiThemeProvider >
         <nav className="navbar fixed-top tc" role="navigation">
           <div className="container-fluid">
             {/* <!-- Brand and toggle get grouped for better mobile display --> */}
