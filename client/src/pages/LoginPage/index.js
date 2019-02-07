@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import {Container, Row, Col} from '../../Components/Grid/';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// import { Container, Row, Col } from '../../Components/Grid/';
+// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
+// import RaisedButton from 'material-ui/RaisedButton';
 // import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
+// import TextField from 'material-ui/TextField';
 import API from "../../utils/API"
 import './style.css';
 
 class Login extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       email: '',
-      username:'',
-      password:'',
+      username: '',
+      password: '',
       token: '',
       logged_in_status: props.logged_in_status,
       all_users: []
@@ -22,21 +22,21 @@ class Login extends Component {
   }
 
   handleGoToRegisterClick = (event) => {
-
+    // location.href = "/register"
   }
 
   // Loads all loggedInUser  and sets them to this.state.books
   loadUserProfile = (loggedInUser) => {
     API.getUser(loggedInUser)
-    .then((res) => { 
-      // console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)
-      return ({ res }) 
-    })
+      .then((res) => {
+        // console.log("LoginPage loadUserProfile  loggedInUser: " , loggedInUser)
+        return ({ res })
+      })
       .catch(err => console.log("LoginPage LoadUserProfile err: ", err));
   };
 
 
-  handleLoginClick = async (e, topState, set_logged_in) => { 
+  handleLoginClick = async (e, topState, set_logged_in) => {
     try {
       // New Login Object
       const loginUser = {
@@ -62,8 +62,8 @@ class Login extends Component {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(loginUser)
-        }, function(error) { 
-          alert("Login Error: ",error.message);
+        }, function (error) {
+          alert("Login Error: ", error.message);
         }
       )
 
@@ -76,89 +76,82 @@ class Login extends Component {
         if (loginUser.email === regRes.token_for) {
           // console.log("LoginPage COMPARE Matched");
           loginUser.logged_in_status = true;
-          await this.setState({logged_in_status: true})
+          await this.setState({ logged_in_status: true })
           // console.log("LoginPage handleClick LOGIN - this.state.logged_in_status: ", this.state.logged_in_status);
           await set_logged_in(this.state.logged_in_status);
           /////////////////////////////////////////
           // GET METHOD to retrieve ALL usersdata to backend
           /////////////////////////////////////////
           API.getAllUsers()
-          .then( async (resGet) => {
-            this.setState({ all_users: resGet.data });
-            console.log("LOGIN PAGE getAllUsers - this.state.all_users", this.state.all_users);
+            .then(async (resGet) => {
+              this.setState({ all_users: resGet.data });
+              console.log("LOGIN PAGE getAllUsers - this.state.all_users", this.state.all_users);
 
-            // console.log("LoginPage handleLoginClick loginUser.username : ", loginUser.username)
-            await this.loadUserProfile(loginUser.username);
-            // console.log('BEFORE AWAIT')
-            loginUser.all_users = this.state.all_users;
-            await topState(loginUser); //
-            // console.log('AFTER AWAIT') 
-            return this.props.history.push("/home"); // Zack's recommendation
-          })
-          .catch(err => console.log(err));
+              // console.log("LoginPage handleLoginClick loginUser.username : ", loginUser.username)
+              await this.loadUserProfile(loginUser.username);
+              // console.log('BEFORE AWAIT')
+              loginUser.all_users = this.state.all_users;
+              await topState(loginUser); //
+              // console.log('AFTER AWAIT') 
+              return this.props.history.push("/home"); // Zack's recommendation
+            })
+            .catch(err => console.log(err));
         }
       } else {
         alert("Login Failed. \nTry Re-entering credentials")
         return this.props.history.push("/"); // Zack's recommendation
         // there is also a redirect function
       }
-    } catch(err) { 
+    } catch (err) {
       console.log("Login Page Says: Line 94", err); // 
       console.log("Login Page Says: Line 95", err.message); // 
     }
   }
 
   render() {
-    const {topLevelState, set_logged_in} = this.props;
-      return (
-        <div>
-          <MuiThemeProvider>
-            <div>
-            {/* <AppBar
-              title="Login"
-            /> */}
-
-            <Container fluid='fluid'>
-              <h2 className='myPageTitle'>Enter Credentials</h2>
-              <Row className='dataEntry'>
-                {/* <dialog id="login"> */}
-                  {/* <form method="dialog" className="loginForm"> */}
-                    <Col size='md-4' margin='0rem'>
-                      <TextField className='dataEntry'
-                        hintText="Enter your e-mail"
-                        floatingLabelText="e-mail"
-                        onChange = {(event,newValue) => this.setState({email:newValue})}
-                      />
-                    </Col>
-                    <Col size='md-4' margin='0rem'>
-                      <TextField className='dataEntry'
-                        hintText="Enter your Username"
-                        floatingLabelText="Username"
-                        onChange = {(event,newValue) => this.setState({username:newValue})}
-                      />
-                    </Col>
-                    <Col size='md-4' margin='0rem'>
-                      <TextField className='dataEntry'
-                        type="password"
-                        hintText="Enter your Password"
-                        floatingLabelText="Password"
-                        onChange = {(event,newValue) => this.setState({password:newValue})}
-                      />
-                    </Col>
-                  {/* </form> */}
-                {/* </dialog> */}
-              </Row>
-            </Container>
-              <RaisedButton label="Login" primary={true} style={style} onClick={(event) => this.handleLoginClick(event, topLevelState, set_logged_in)}/>
-              <h5 className="tc f5">Not yet a member?</h5>
-              <RaisedButton label="Register" href='/register' primary={true} style={style} onClick={(event) => this.handleGoToRegisterClick(event)}/>
+    const { topLevelState, set_logged_in } = this.props;
+    return (
+      <div className="container">
+        <h2 className="paddingTitle">Enter Credentials</h2>
+        <div className="row">
+          <div className="col-md-4">
+            <input type="text"
+              placeholder="e-mail"
+              className="form-control"
+              onChange={(event, newValue) => this.setState({ email: newValue })}
+            />
           </div>
-          </MuiThemeProvider>
+          <div className="col-md-4">
+            <input type="text"
+              placeholder="username"
+              className="form-control"
+              onChange={(event, newValue) => this.setState({ username: newValue })}
+            />
+          </div>
+          <div className="col-md-4">
+            <input type="text"
+              placeholder="password"
+              className="form-control"
+              onChange={(event, newValue) => this.setState({ password: newValue })}
+            />
+          </div>
         </div>
-      );
-    }
+        <div className="row">
+          <div className="col-md-12 padding">
+            <button type="button" className="btn btn-secondary" onClick={(event) => this.handleLoginClick(event, topLevelState, set_logged_in)}>Login</button>
+          </div>
+          <div className="col-md-12 padding">
+            <h5 className="tc f5">Not yet a member?</h5>
+          </div>
+          <div className="col-md-12 padding">
+            <a href="/register" className="btn btn-secondary">Register</a>
+          </div>
+        </div>
+      </div>
+    );
   }
-  const style = {
+}
+const style = {
   margin: 15,
 };
 
