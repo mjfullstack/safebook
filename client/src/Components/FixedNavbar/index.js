@@ -39,8 +39,10 @@ class FixedNavbar extends React.Component {
           <div className="container">
             {/* <button className='nav navbar-nav'  onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}>SafeBook</button> */}
             <a className="navbar-brand float-left" rel="noopener noreferrer" href="#"
-              onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}
-            ><i className="fas fa-home sb-ico-margin"></i>safebook</a>
+              onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}>
+              <i className="fas fa-lock sb-ico-margin"> </i>
+              safebook
+            </a>
             <button className="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
               aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +60,7 @@ class FixedNavbar extends React.Component {
                 <li className="nav-item">
                   <a className="nav-link" rel="noopener noreferrer" href="#"
                     onClick={(event) => this.handleGoToSearchClick(event)}
-                    ><i class="fas fa-search sb-ico-margin"></i>Search
+                    ><i className="fas fa-search sb-ico-margin"></i>Search
                   </a>
                 </li>
               </ul>
