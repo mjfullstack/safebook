@@ -86,7 +86,7 @@ class HomePage extends React.Component {
             <div className="col-md-12 padding">
               <button type="button" className="btn btn-secondary marginButton"
                 onClick={(event) => this.handleGoToSearchClick(event)}
-                ><i class="fas fa-search sb-ico-margin"></i>Go To Search
+                ><i className="fas fa-search sb-ico-margin"></i>Go To Search
               </button>
             </div>
           </div>

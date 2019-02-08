@@ -47,26 +47,27 @@
 .sb-ico-margin {
   margin: 5px;
 }
- /* .sb-navbar {
-  position: fixed;
-  top: 0;
-} */
-/*
-  width: 100%;
-  color: #000;
-  background-color: brown.
-} */
 
-  h1 {
-    font-weight: 900;
-    color: darkgrey;
-    text-align: center;
-  }
+h1 {
+  font-weight: 900;
+  color: darkgrey;
+  text-align: center;
+}
 
-  h2 {
-    font-weight: 600;
-    color: darkgrey;
-    text-align: center;
-  }
+h2 {
+  font-weight: 600;
+  color: darkgrey;
+  text-align: center;
+}
 
-
+.button-as-link {
+  background:none!important;
+  color:inherit;
+  border:none; 
+  padding:0!important;
+  font: inherit;
+  margin-top: 9px;
+  /*border is optional*/
+  /* border-bottom:1px solid #444;  */
+  cursor: pointer;
+}

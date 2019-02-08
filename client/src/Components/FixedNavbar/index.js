@@ -23,9 +23,14 @@ class FixedNavbar extends React.Component {
     }
   }
 
-  handleGoToSearchClick(event) {
+  handleGoToSearchClick(event, logged_in_status) {
     event.preventDefault();
-    return this.props.history.push("/finduser");
+    if ( logged_in_status) {
+      return this.props.history.push("/finduser");
+    } else {
+      return this.props.history.push("/");
+    }
+
   }
 
   render () {
@@ -35,38 +40,47 @@ class FixedNavbar extends React.Component {
       <div>
 
         {/* <nav className="navbar fixed-top tc" role="navigation"> */}
-        <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top float-right sb-navbar">
-          <div className="container">
+          {/* <div className="container"> */}
+        <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top navbar-right">
+        {/* <nav className="navbar  navbar-expand-lg navbar-light bg-light navbar-right"> */}
+        <div className="container ">
             {/* <button className='nav navbar-nav'  onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}>SafeBook</button> */}
-            <a className="navbar-brand float-left" rel="noopener noreferrer" href="#"
+            <button className="navbar-brand button-as-link float-left" rel="noopener noreferrer" href="#"
               onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}>
               <i className="fas fa-lock sb-ico-margin"> </i>
               safebook
-            </a>
-            <button className="navbar-toggler" type="button" data-toggle="collapse"
+            </button>
+            <button className="navbar-toggler " type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
               aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item active">
-                  <a className="nav-link" rel="noopener noreferrer" href="#"
+              <ul className="navbar-nav ml-auto ">
+                <li className="nav-item active ">
+                  <button className="nav-link button-as-link float-right" rel="noopener noreferrer" href="#"
                     onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}
                   ><i className="fas fa-home sb-ico-margin"></i> Home
                         <span className="sr-only">(current)</span>
-                  </a>
+                  </button>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" rel="noopener noreferrer" href="#"
-                    onClick={(event) => this.handleGoToSearchClick(event)}
+                  <button className="nav-link button-as-link float-right" rel="noopener noreferrer" href="#"
+                    onClick={(event) => this.handleGoToSearchClick(event, logged_in_status)}
                     ><i className="fas fa-search sb-ico-margin"></i>Search
-                  </a>
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button className="nav-link button-as-link float-right" rel="noopener noreferrer" href="#"
+                    onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}>
+                    <i className="fas fa-sign-out-alt sb-ico-margin"></i>Logout
+                  </button>
                 </li>
               </ul>
             </div>
-          </div> {/* <!-- /.container-fluid for outside container --> */}
+            </div>
         </nav>
+          {/*</div> */} {/* <!-- /.container-fluid for outside container --> */}
 
 
 
@@ -86,7 +100,6 @@ class FixedNavbar extends React.Component {
               </ul>
             </div>    */}  {/* <!-- /.navbar-collapse --> */}
         {/* </nav> */}
-        {/* </MuiThemeProvider> */}
       </div>
     )
   }
