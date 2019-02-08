@@ -1,15 +1,7 @@
 import React from "react";
-// import {Container, Row, Col} from '../../Components/Grid/';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import SearchBox from "../../Components/SearchBox";
 import './style.css';
 import CardList from "../../Components/CardList";
 
-
-// const onSearchChange = (event) => {
-//   this.setState({ searchfield: event.target.value })
-//   console.log("event.target.value: ", event.target.value);
-// };
 
 class FindUser extends React.Component {
   constructor(props) {
@@ -20,45 +12,44 @@ class FindUser extends React.Component {
       user: props.users, // Logged In Individual
       friends: [],
       all_users: props.all_users,
-      // im_logged_in: {}, // Object
       logged_in_status: false // Boolean to track across app
     }
   }
 
   onSearchChange = (event) => {
     this.setState({ searchfield: event.target.value })
-    console.log("FIND USER event.target.value: ", event.target.value);
-    console.log("FIND USER this.state.searchfield: ", this.state.searchfield);
+    // console.log("FIND USER event.target.value: ", event.target.value);
+    // console.log("FIND USER this.state.searchfield: ", this.state.searchfield);
   };
 
 
   render() {
-    const { users, searchChange, all_users } = this.props;
-    console.log("FindUserPage - all_users: ", all_users);
+    // const { users, searchChange, all_users } = this.props;
+    // console.log("FindUserPage - all_users: ", all_users);
     const filteredAllUsers = this.state.all_users.filter(foundUser => {
       return foundUser.first_name.toLowerCase().includes(this.state.searchfield.toLowerCase());
     })
 
     return (
       <div>
-        <MuiThemeProvider>
-          <div>
-            <h2 className='myPageTitle'>Find User - Type Letters to Search Names...</h2>
-            <SearchBox
-              // searchChange={searchChange} // Root App.onSearchChange
-              searchChange={this.onSearchChange}
-            />
-            <CardList
-              users={filteredAllUsers}
-            />
+        <div>
+          <h2 className='paddingTitle'>Find User - Type Letters to Search Names...</h2>
+          <div className="form-group">
+            <input type="text"
+              placeholder="Search safebook..."
+              className="form-control marginButton"
+              // onChange={(event) => this.setState({ searchfield: event.target.value })}
+              // searchChange={(event) => this.onSearchChange(event)}
+              onChange={(event) => this.onSearchChange(event)}
+              />
           </div>
-        </MuiThemeProvider>
+          <CardList
+            users={filteredAllUsers}
+          />
+        </div>
       </div>
     )
   }
 };
-  // const style = {
-  //   margin: 15,
-  // }
 
 export default FindUser;

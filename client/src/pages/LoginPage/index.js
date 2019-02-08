@@ -1,10 +1,4 @@
 import React, { Component } from 'react';
-// import { Container, Row, Col } from '../../Components/Grid/';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import AppBar from 'material-ui/AppBar';
-// import RaisedButton from 'material-ui/RaisedButton';
-// import FlatButton from 'material-ui/FlatButton';
-// import TextField from 'material-ui/TextField';
 import API from "../../utils/API"
 import './style.css';
 
@@ -85,7 +79,7 @@ class Login extends Component {
           API.getAllUsers()
             .then(async (resGet) => {
               this.setState({ all_users: resGet.data });
-              console.log("LOGIN PAGE getAllUsers - this.state.all_users", this.state.all_users);
+              // console.log("LOGIN PAGE getAllUsers - this.state.all_users", this.state.all_users);
 
               // console.log("LoginPage handleLoginClick loginUser.username : ", loginUser.username)
               await this.loadUserProfile(loginUser.username);
@@ -103,8 +97,8 @@ class Login extends Component {
         // there is also a redirect function
       }
     } catch (err) {
-      console.log("Login Page Says: Line 94", err); // 
-      console.log("Login Page Says: Line 95", err.message); // 
+      console.log("Login Page Says: Line 106", err); // 
+      console.log("Login Page Says: Line 107", err.message); // 
     }
   }
 
@@ -115,44 +109,47 @@ class Login extends Component {
         <h2 className="paddingTitle">Enter Credentials</h2>
         <div className="row">
           <div className="col-md-4">
-            <input type="text"
-              placeholder="e-mail"
-              className="form-control"
-              onChange={(event, newValue) => this.setState({ email: newValue })}
-            />
+            <div className="form-group">
+              <input type="email"
+                placeholder="e-mail"
+                className="form-control"
+                onChange={(event) => this.setState({ email: event.target.value })}
+              />
+            </div>
           </div>
           <div className="col-md-4">
-            <input type="text"
-              placeholder="username"
-              className="form-control"
-              onChange={(event, newValue) => this.setState({ username: newValue })}
-            />
+            <div className="form-group">
+              <input type="text"
+                placeholder="username"
+                className="form-control"
+                onChange={(event) => this.setState({ username: event.target.value })}
+              />
+            </div>
           </div>
           <div className="col-md-4">
-            <input type="text"
-              placeholder="password"
-              className="form-control"
-              onChange={(event, newValue) => this.setState({ password: newValue })}
-            />
+            <div className="form-group">
+              <input type="password"
+                placeholder="password"
+                className="form-control"
+                onChange={(event) => this.setState({ password: event.target.value })}
+              />
+            </div>
           </div>
         </div>
         <div className="row">
           <div className="col-md-12 padding">
-            <button type="button" className="btn btn-secondary" onClick={(event) => this.handleLoginClick(event, topLevelState, set_logged_in)}>Login</button>
+            <button type="button" className="btn btn-secondary marginButton" onClick={(event) => this.handleLoginClick(event, topLevelState, set_logged_in)}>Login</button>
           </div>
           <div className="col-md-12 padding">
             <h5 className="tc f5">Not yet a member?</h5>
           </div>
           <div className="col-md-12 padding">
-            <a href="/register" className="btn btn-secondary">Register</a>
+            <a href="/register" className="btn btn-secondary marginButton" >Register</a>
           </div>
         </div>
       </div>
     );
   }
 }
-const style = {
-  margin: 15,
-};
 
 export default Login;

@@ -3,7 +3,7 @@ import axios from "axios";
 export default {
   // Get all users - I think we'll want this, too
   getAllUsers: function() {
-    console.log("API getAllUsers GOT HIT!!!: " )
+    // console.log("API getAllUsers GOT HIT!!!: " )
     return axios.get("/api/users/allusers");
     // return axios.get("/allusers");
   },

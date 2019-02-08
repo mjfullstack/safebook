@@ -17,13 +17,12 @@ export default class App extends Component {
       users: [], // Logged in user in [0], only used array location
       friends: [],
       all_users: [],
-      // im_logged_in: {}, // Object
       logged_in_status: false // Boolean to track across app
     }
   }
   setLoggedInStatus = (logged_in_status) => {
     this.setState({ logged_in_status: logged_in_status })
-    console.log("App setLoggedInStatus: What goes into logged_in_status: ", logged_in_status);
+    // console.log("App setLoggedInStatus: What goes into logged_in_status: ", logged_in_status);
     return ({ logged_in_status: logged_in_status })
   }
 
@@ -31,15 +30,15 @@ export default class App extends Component {
     this.setState((pvSt) => {
       const updatedUsers = pvSt.users.concat(newUser);
       const updatedAllUsers = pvSt.all_users.concat(newUser.all_users);
-      console.log("Just BEFORE PUSH in APP.setTopState - updatedUsers: ", updatedUsers);
-      console.log("Just BEFORE PUSH in APP.setTopState - updatedAllUsers: ", updatedAllUsers);
+      // console.log("Just BEFORE PUSH in APP.setTopState - updatedUsers: ", updatedUsers);
+      // console.log("Just BEFORE PUSH in APP.setTopState - updatedAllUsers: ", updatedAllUsers);
       return ({ users: updatedUsers, all_users: updatedAllUsers })
     })
   }
 
   onSearchChange = (event) => {
     this.setState({ searchfield: event.target.value })
-    console.log("event.target.value: ", event.target.value);
+    // console.log("event.target.value: ", event.target.value);
   };
 
   render() {
