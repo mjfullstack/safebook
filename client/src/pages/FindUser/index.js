@@ -33,7 +33,7 @@ class FindUser extends React.Component {
     return (
       <div>
         <div>
-          <h2 className='paddingTitle'>Find User - Type Letters to Search Names...</h2>
+          <h2 className='paddingTitle'><i class="fas fa-search sb-ico-margin"></i>Find User - Type Letters to Search Names...</h2>
           <div className="form-group">
             <input type="text"
               placeholder="Search safebook..."

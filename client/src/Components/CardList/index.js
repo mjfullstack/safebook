@@ -7,7 +7,6 @@ const CardList = ({ users }) => {
   const cardArray = users.map((user, idx) => {
     return ( 
       <Card 
-        // id={user.id} // Intent?
         key={idx }
         first_name={user.first_name} 
         middle_name={user.middle_name} 

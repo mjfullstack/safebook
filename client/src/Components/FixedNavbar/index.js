@@ -1,32 +1,8 @@
 import React from "react";
 import './style.css';
-// import { MuiThemeProvider, style, createMuiTheme } from 'material-ui/styles';
-import { MuiThemeProvider, style } from 'material-ui/styles';
-// import RaisedButton from 'material-ui/RaisedButton';
-// import StepButton from 'material-ui/StepButton';
-import FlatButton from 'material-ui/FlatButton';
 import { withRouter } from "react-router-dom";
 // import { withState } from "recompose";
 import 'typeface-roboto';
-// import { StepButton } from "material-ui";
-
-
-// const styles = { // NOT being applied
-//   buttonStyle: {
-//     // backgroundColor: "#aaa",
-//     backgroundColor: 'blue'
-//   }
-// }
-
-// const myTheme = createMuiTheme ({
-//   overrides: {
-//     MuiButton: {
-//       FlatButton: {
-//         color: 'white',
-//       },
-//     },
-//   }
-// })
 
 class FixedNavbar extends React.Component {
   constructor(props){
@@ -46,37 +22,59 @@ class FixedNavbar extends React.Component {
       return this.props.history.push("/");
     }
   }
-  render () {
-    const { logged_in_status } = this.props;
-    // const {currentScore, highScore, wonDisplayed} = this.props;
-    // console.log(`Score: ${currentScore} High Score: ${highScore}`);
-    // console.log(`wonDisplayed: ${wonDisplayed}`);
-  return (
-    <div>
-     {/* <MuiThemeProvider theme={myTheme}> */}
-     <MuiThemeProvider>
-        <nav className="navbar fixed-top tc" role="navigation">
-          <div className="container-fluid">
-            {/* <!-- Brand and toggle get grouped for better mobile display --> */}
-            {/* <div className="navbar-header"> */}
-            {/* <a className='nav navbar-nav' href='/home'><h1 className='tc f1'>SafeBook</h1></a> */}
-            {/* <FlatButton theme='dark' color='black' label='SAFEBOOK' primary={true} style={style} className='nav navbar-nav tc f1 mySafeHeader' role='button' >SafeBook</FlatButton> */}
-            {/* <ul className="nav navbar-nav tc">
-              <li > {<FlatButton theme='dark' color='black' label='SAFEBOOK' primary={true} style={style} className='nav navbar-nav tc f1 mySafeHeader' role='button' >SafeBook</FlatButton>} </li>
-            </ul> */}
-                 <FlatButton label='SafeBook' centerRipple backgroundColor='blue' primary={true} style={style} className='nav navbar-nav tc f1 mySafeHeader' onClick={(event) => this.handleSafeBookClick(event, logged_in_status)} ></FlatButton>
-                 {/* <RaisedButton label='SafeBook' centerRipple backgroundColor='blue' primary={true} style={style} className='nav navbar-nav tc f1 mySafeHeader' onClick={(event) => this.handleSafeBookClick(event, logged_in_status)} ></RaisedButton> */}
-                 {/* <StepButton label='SafeBook' primary={true} style={style} className='nav navbar-nav tc f1 mySafeHeader' onClick={(event) => this.handleSafeBookClick(event, logged_in_status)} ></StepButton> */}
-                 {/* <FlatButton onClick={(event) => this.handleSafeBookClick(event, logged_in_status)} overrides={MuiButton= {FlatButton= {color='white', label='SafeBook', className='nav navbar-nav', }}}>safebook</FlatButton> */}
-            {/* <RaisedButton className='nav navbar-nav' role='button' onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}><h1 className='tc f1'>SafeBook</h1></RaisedButton> */}
-            {/* <button className='nav navbar-nav' role='button' onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}><h1 className='tc f1'>SafeBook</h1></button> */}
-              {/* <ul className="nav navbar-nav tc">
-                <li ><a  href='/home'><h1 className='tc f1'>SafeBook</h1></a></li> 
-              </ul> */}
-            {/* </div> */}
 
+  handleGoToSearchClick(event) {
+    event.preventDefault();
+    return this.props.history.push("/finduser");
+  }
+
+  render () {
+    // const { logged_in_status, set_logged_in } = this.props;
+    const { logged_in_status } = this.props;
+    return (
+      <div>
+
+        {/* <nav className="navbar fixed-top tc" role="navigation"> */}
+        <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top float-right sb-navbar">
+          <div className="container">
+            {/* <button className='nav navbar-nav'  onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}>SafeBook</button> */}
+            <a className="navbar-brand float-left" rel="noopener noreferrer" href="#"
+              onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}
+            ><i className="fas fa-home sb-ico-margin"></i>safebook</a>
+            <button className="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item active">
+                  <a className="nav-link" rel="noopener noreferrer" href="#"
+                    onClick={(event) => this.handleSafeBookClick(event, logged_in_status)}
+                  ><i className="fas fa-home sb-ico-margin"></i> Home
+                        <span className="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" rel="noopener noreferrer" href="#"
+                    onClick={(event) => this.handleGoToSearchClick(event)}
+                    ><i class="fas fa-search sb-ico-margin"></i>Search
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div> {/* <!-- /.container-fluid for outside container --> */}
+        </nav>
+
+
+
+
+
+
+
+            {/* WAS FROM OLD NAVBAR */}
             {/* <!-- Collect the nav links, forms, and other content for toggling --> */}
-            <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {/* <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul className="nav navbar-nav">
                 <li className="pull-left"><button target="_blank" rel="noopener noreferrer" href="#">Dashboard</button></li>
                 <li className="active"><button target="_blank" rel="noopener noreferrer" href="#">Stories</button></li>
@@ -84,12 +82,11 @@ class FixedNavbar extends React.Component {
                 <li><button target="_blank" rel="noopener noreferrer" href="#">Photos</button></li>
                 <li className="social pull-right"><button href="#">Social Links</button></li>
               </ul>
-            </div> {/* <!-- /.navbar-collapse --> */}
-          </div> {/* <!-- /.container-fluid --> */}
-        </nav>
-        </MuiThemeProvider>
-    </div>
-  )
+            </div>    */}  {/* <!-- /.navbar-collapse --> */}
+        {/* </nav> */}
+        {/* </MuiThemeProvider> */}
+      </div>
+    )
   }
 };
 
