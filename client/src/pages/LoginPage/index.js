@@ -41,6 +41,8 @@ class Login extends Component {
         logged_in_status: this.state.logged_in_status,
         all_users: this.state.all_users
       }
+      console.log("ENTRY to handleLoginClick - JSON.stringify(loginUser): ", JSON.stringify(loginUser));
+      console.log("ENTRY to handleLoginClick - loginUser.logged_in_status: ", loginUser.logged_in_status);
 
       /////////////////////////////////////////
       // POST METHOD to send data to backend

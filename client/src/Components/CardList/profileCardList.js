@@ -1,12 +1,12 @@
 // Parent of Card.js
 import React from 'react';
-import SbCard from '../sbCard';
+import ProfileCard from '../sbCard/profileCard';
 
-const CardList = ({ users }) => {
+const profileCardList = ({ users }) => {
   // console.log("CardList -- Users: ", users)
   const cardArray = users.map((user, idx) => {
     return ( 
-      <SbCard 
+      <ProfileCard 
         key={idx }
         first_name={user.first_name} 
         middle_name={user.middle_name} 
@@ -29,4 +29,4 @@ const CardList = ({ users }) => {
   )
 };
 
-export default CardList;
+export default profileCardList;

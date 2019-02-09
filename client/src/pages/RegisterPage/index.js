@@ -15,7 +15,6 @@ class Register extends Component {
       token: '',
       user_pic: '',
       user_id: '',
-      // id: '',
       birthdate: '',
       age: '',
       phone_number: '',
@@ -75,7 +74,7 @@ class Register extends Component {
         all_users: this.state.all_users,
         pictures: []
       }
-      // console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
+      console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
 
       /////////////////////////////////////////
       // GET METHOD to retrieve ALL usersdata to backend
