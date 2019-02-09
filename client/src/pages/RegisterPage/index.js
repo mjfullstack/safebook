@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from '../../Components/Grid/';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import API from "../../utils/API"
 import './style.css';
 
@@ -20,12 +15,12 @@ class Register extends Component {
       token: '',
       user_pic: '',
       user_id: '',
-      // id: '',
       birthdate: '',
       age: '',
       phone_number: '',
       pictures: [],
       logged_in_status: props.logged_in_status,
+      all_users: [],
       imageURL: ''
     };
   }
@@ -79,7 +74,7 @@ class Register extends Component {
         all_users: this.state.all_users,
         pictures: []
       }
-      // console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
+      console.log("ENTRY to handleClick - JSON.stringify(newUser): ", JSON.stringify(newUser));
 
       /////////////////////////////////////////
       // GET METHOD to retrieve ALL usersdata to backend
@@ -89,7 +84,12 @@ class Register extends Component {
           this.setState({ all_users: resGet.data });
           console.log("REGISTER PAGE getAllUsers - this.state.all_users", this.state.all_users);
           newUser.user_id = resGet.data.length + 1;
+          
           // console.log(`RegisterPage handleClick newUser.user_id (ARRAY LENGTH) ${newUser.user_id}`);  
+          // console.log('BEFORE AWAIT')
+          newUser.all_users = resGet.data;
+          // await topState(newUser); //
+          // console.log('AFTER AWAIT') 
 
           /////////////////////////////////////////
           // POST METHOD to send data to backend
@@ -111,7 +111,6 @@ class Register extends Component {
             birthdate: newUser.birthdate,
             age: newUser.age,
             phone_number: newUser.phone_number,
-            // all_users: newUser.all_users // Array of objects... Friends will be just list of IDs
           }
           // console.log("handleClick - requestBody: ", requestBody);
           const res = await fetch(postDataURL,
@@ -170,122 +169,127 @@ class Register extends Component {
     const { topLevelState, set_logged_in } = this.props;
     return (
       <div>
-        <MuiThemeProvider>
-            <div className="container">
-              <h2 className='paddingTitle'> Registration</h2>
-              <h2>Enter e-mail, username and password:</h2>
-              <div className="row">
-                <div className="col-md-4">
-                  <TextField className='dataEntry'
-                    type="email"
-                    hintText="Enter your e-mail"
-                    floatingLabelText="e-mail"
-                    onChange={(event, newValue) => this.setState({ email: newValue })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <TextField className='dataEntry'
-                    type="username"
-                    hintText="Select a Username"
-                    floatingLabelText="Username"
-                    onChange={(event, newValue) => this.setState({ username: newValue })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <TextField className='dataEntry'
-                    type="password"
-                    hintText="Select a Password"
-                    floatingLabelText="Password"
-                    onChange={(event, newValue) => this.setState({ password: newValue })}
-                  />
-                </div>
+        <div className="container">
+          <h2 className='paddingTitle'> Registration</h2>
+          <h2>Enter e-mail, username and password:</h2>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="form-group">
+                <input type="email"
+                  placeholder="e-mail"
+                  className="form-control"
+                  onChange={(event) => this.setState({ email: event.target.value })}
+                />
               </div>
-              <h2 className="paddingTitle">Enter Name:</h2>
-              <div className="row">
-                <div className="col-md-4">
-                  <TextField className='dataEntry'
-                    hintText="Enter your FIRST name"
-                    floatingLabelText="First Name"
-                    onChange={(event, newValue) => this.setState({ first_name: newValue })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <TextField className='dataEntry'
-                    hintText="Enter your MIDDLE name"
-                    floatingLabelText="Middle Name"
-                    onChange={(event, newValue) => this.setState({ middle_name: newValue })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <TextField className='dataEntry'
-                    hintText="Enter your LAST name"
-                    floatingLabelText="Last Name"
-                    onChange={(event, newValue) => this.setState({ last_name: newValue })}
-                  />
-                </div>
+            </div>
+            <div className="col-md-4">
+              <div className="form-group">
+                <input type="text"
+                  placeholder="username"
+                  className="form-control"
+                  onChange={(event) => this.setState({ username: event.target.value })}
+                />
               </div>
-              <div className="row">
-                <div className="col-md-4">
-                  <TextField className='dataEntry'
-                    type="date"
-                    hintText=""
-                    floatingLabelText=" " // "Birthdate"
-                    onChange={(event, newValue) => this.setState({ birthdate: newValue })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <TextField className='dataEntry'
-                    type="number"
-                    hintText="Enter your Age"
-                    floatingLabelText="Age"
-                    onChange={(event, newValue) => this.setState({ age: newValue })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <TextField className='dataEntry'
-                    type="phone"
-                    hintText="Enter your Phone Number"
-                    floatingLabelText="Phone Number"
-                    onChange={(event, newValue) => this.setState({ phone_number: newValue })}
-                  />
-                </div>
+            </div>
+            <div className="col-md-4">
+              <div className="form-group">
+                <input type="password"
+                  placeholder="password"
+                  className="form-control"
+                  onChange={(event) => this.setState({ password: event.target.value })}
+                />
               </div>
-              <div className="row">
-                <div className="col-md-4" />
-                <div className="col-md-4">
-                  <input className='pa4'
-                    type="file"
-                    id="file"
-                    name="file"
-                    placeholder="Upload an Image"
-                    required
-                    onChange={this.uploadFile}
-                  />
-                </div>
-                <div className="col-md-4" />
+            </div>
+          </div>
+          <h2 className="paddingTitle">Enter Name:</h2>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="form-group">
+                <input type="text"
+                  placeholder="First Name"
+                  className="form-control"
+                  onChange={(event) => this.setState({ first_name: event.target.value })}
+                />
               </div>
-              <div className="row">
-                <div className="col-md-4" />
-                <div className="col-md-4">
-                  {this.state.imageURL && <img className='pa4' src={this.state.imageURL} alt="Upload Preview" width="200" height='200' />}
-                </div>
-                <div className="col-md-4">
-                </div>
+            </div>
+            <div className="col-md-4">
+              <div className="form-group">
+                <input type="text"
+                  placeholder="Middle Name"
+                  className="form-control"
+                  onChange={(event) => this.setState({ middle_name: event.target.value })}
+                />
               </div>
-              <RaisedButton
-                label="Submit"
-                // href="/home" // Using onClick function and props.hsitory.push to get to next page
-                primary={true}
-                style={style}
-                onClick={(event) => this.handleClick(event, topLevelState, set_logged_in)}
+            </div>
+            <div className="col-md-4">
+              <div className="form-group">
+                <input type="text"
+                  placeholder="Last Name"
+                  className="form-control"
+                  onChange={(event) => this.setState({ last_name: event.target.value })}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="form-group">
+                <input type="date"
+                  placeholder="Birthdate"
+                  className="form-control"
+                  onChange={(event) => this.setState({ birthdate: event.target.value })}
+                />
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="form-group">
+                <input type="number"
+                  placeholder="Enter your Age"
+                  className="form-control"
+                  onChange={(event) => this.setState({ age: event.target.value })}
+                />
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="form-group">
+                <input type="phone"
+                  placeholder="Enter your Phone Number"
+                  className="form-control"
+                  onChange={(event) => this.setState({ phone_number: event.target.value })}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4" />
+            <div className="col-md-4">
+              <input className='pa4'
+                type="file"
+                id="file"
+                name="file"
+                placeholder="Upload an Image"
+                required
+                onChange={this.uploadFile}
               />
             </div>
-        </MuiThemeProvider>
+            <div className="col-md-4" />
+          </div>
+          <div className="row">
+            <div className="col-md-4" />
+            <div className="col-md-4">
+              {this.state.imageURL && <img className='pa4' src={this.state.imageURL} alt="Upload Preview" width="auto" height='200' />}
+            </div>
+            <div className="col-md-4" />
+          </div>
+          <div className="row">
+            <div className="col-md-12 padding">
+              <button type="button" className="btn btn-secondary marginButton" onClick={(event) => this.handleClick(event, topLevelState, set_logged_in)}>Submit</button>
+            </div>
+          </div>
+        </div>
       </div>
-        );
-      }
-    }
-const style = {
-          margin: 15,
-  };
+    );
+  }
+}
+
 export default Register;

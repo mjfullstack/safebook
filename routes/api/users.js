@@ -25,7 +25,7 @@ router.post('/answers',function(req, res) {
 
   //with valid login, return token
   router.post('/login', function(req, res)  {
-    console.log("SAW LOGIN!! req.body: ", req.body);
+    // console.log("SAW LOGIN!! req.body: ", req.body);
       if (!req.body.email || !req.body.password) {
           // email address is absolutely necessary for user creation
           res.json({
@@ -103,7 +103,7 @@ router.post('/answers',function(req, res) {
   }); // end login
 
 router.post('/register', function(req, res) {
-    console.log("SAW REGISTER!! req.body: ", req.body);
+    // console.log("SAW REGISTER!! req.body: ", req.body);
     if (!req.body.email || !req.body.password)
       {
         // email address is absolutely necessary for user creation
@@ -159,7 +159,7 @@ router.post('/register', function(req, res) {
                 user.birthdate =  req.body.birthdate;
                 user.age =  req.body.age;
                 user.phone_number = req.body.phone_number || 5555555555;
-                console.log("ROUTE API USERS user: ", user);
+                // console.log("ROUTE API USERS user: ", user);
                 user.save(function(err) {
                     if (err) {
                         res.json({

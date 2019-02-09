@@ -1,5 +1,8 @@
 // Child of Cardlist.js
 import React from 'react'; // Required for JSX i.e. <div> below is
+import { Card } from 'react-bootstrap';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 const PostsCard = (props) => {  
   const { 
@@ -8,13 +11,16 @@ const PostsCard = (props) => {
           // username_page,
           created_date,
         } = props;
+  // const formattedDate = Moment(created_date).format('LLLL');
+
   return ( // return ONE component i.e. div
     <div>
       {/* <h4>Posts</h4> */}
-          <h6>Post: {post}</h6>
+          <h6 className="topPost">Post: {post}</h6>
           <h6>Post By: {username_posted}</h6>
           <h6>Post Date: {created_date}</h6><br />
-    </div>
+          {/* <h6>Post Date: {formattedDate}</h6><br /> */}
+          </div>
   )
 }
 

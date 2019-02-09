@@ -1,6 +1,6 @@
 // Parent of Card.js
 import React from 'react';
-import PostsCard from '../Card/postsCard';
+import PostsCard from '../sbCard/postsCard';
 
 const PostsCardList = ({ posts }) => {
   if (posts[0]) {
