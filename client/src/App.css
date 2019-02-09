@@ -76,8 +76,8 @@ h2 {
   padding-top: 7rem;
 }
 
-.profilePic, .topPost .card {
-  margin-top: 2rem;
+.profilePic, .topPost .Card {
+  /* margin-top: 2rem; */
   max-height: 75%;
 }
 

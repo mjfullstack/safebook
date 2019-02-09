@@ -48,7 +48,7 @@ const SbCard = (props) => {
           {/* <button type="button" className="btn btn-secondary marginButton" >Friend Request</button> */}
         </CardBody>
       </Card>
-
+      <br />
       {/* <thumbnail style={{ width: '18rem' }}>
         <thumbnail.Img variant="top" className='tc profilePic cardImg' alt='Profile Pic Coming Soon!' src={user_pic} width="auto" height='200' />
         <thumbnail.Body>
