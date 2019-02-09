@@ -4,6 +4,7 @@ import React from 'react'; // Required for JSX i.e. <div> below is
 // import { Card, thumbnail } from 'react-bootstrap';
 import {  Card, CardImg, CardText, CardBody,
           CardTitle, CardSubtitle, Button } from 'reactstrap';
+
 const SbCard = (props) => {  
   const { 
           user_id, 

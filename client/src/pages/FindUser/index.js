@@ -1,6 +1,8 @@
 import React from "react";
 import './style.css';
-import CardList from "../../Components/CardList";
+import SearchList from "../../Components/CardList/searchList";
+import {  Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button } from 'reactstrap';
 
 
 class FindUser extends React.Component {
@@ -31,7 +33,7 @@ class FindUser extends React.Component {
     })
 
     return (
-      <div>
+      // <div>
         <div>
           <h2 className='paddingTitle'><i className='fas fa-search sb-ico-margin'></i>Find User - Type Letters to Search Names...</h2>
           <div className="form-group">
@@ -43,11 +45,15 @@ class FindUser extends React.Component {
               onChange={(event) => this.onSearchChange(event)}
               />
           </div>
-          <CardList
-            users={filteredAllUsers}
-          />
+          <div className="container">
+            <div className="row">
+                <SearchList
+                  users={filteredAllUsers}
+                />
+            </div> {/** Row **/}
+          </div> {/** Container **/}
         </div>
-      </div>
+      // </div>
     )
   }
 };

@@ -18,7 +18,6 @@ const CardList = ({ users }) => {
         user_pic={user.user_pic}
         user_id={user.user_id}
         email={user.email}
-        
       />
     )
   })
