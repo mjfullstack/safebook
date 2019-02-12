@@ -18,9 +18,12 @@ class Login extends Component {
   handleGoToRegisterClick = async (e, topState, set_logged_in) => { 
     e.preventDefault();
     // location.href = "/register" // HREF NAVGATION DOES NOT WORK ON HEROKU REACT APPS!!!!
-    await this.setState({ logged_in_status: true })
+    await this.setState({ logged_in_status: false })
     await set_logged_in(this.state.logged_in_status);
-    // await topState(loginUser); //
+    const goGetNewUser = {
+      email: 'nobody@email.none'
+    }
+    await topState(goGetNewUser); // Changing root level state to get re-render
     return this.props.history.push("/register"); // Zack's recommendation, or another method...
 
   }
