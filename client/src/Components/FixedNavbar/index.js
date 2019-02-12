@@ -2,7 +2,7 @@ import React from "react";
 import './style.css';
 import { withRouter } from "react-router-dom";
 // import { withState } from "recompose";
-import 'typeface-roboto';
+// import 'typeface-roboto';
 
 class FixedNavbar extends React.Component {
   constructor(props){
