@@ -15,8 +15,13 @@ class Login extends Component {
     }
   }
 
-  handleGoToRegisterClick = (event) => {
-    // location.href = "/register"
+  handleGoToRegisterClick = (e, ) => {
+    e.preventDefault();
+    // location.href = "/register" // HREF NAVGATION DOES NOT WORK ON HEROKU REACT APPS!!!!
+    await this.setState({ logged_in_status: false })
+    await set_logged_in(this.state.logged_in_status);
+    return this.props.history.push("/register"); // Zack's recommendation, or another method...
+
   }
 
   // Loads all loggedInUser  and sets them to this.state.books
@@ -146,7 +151,7 @@ class Login extends Component {
             <h5 className="tc f5">Not yet a member?</h5>
           </div>
           <div className="col-md-12 padding">
-            <a href="/register" className="btn btn-secondary marginButton" >Register</a>
+            <a href="/register" className="btn btn-secondary marginButton" onClick={(event) => this.handleRegisterClick(event, topLevelState, set_logged_in)}>Register</a>
           </div>
         </div>
       </div>
