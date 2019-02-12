@@ -15,11 +15,12 @@ class Login extends Component {
     }
   }
 
-  handleGoToRegisterClick = async (e, set_logged_in) => { 
+  handleGoToRegisterClick = async (e, topState, set_logged_in) => { 
     e.preventDefault();
     // location.href = "/register" // HREF NAVGATION DOES NOT WORK ON HEROKU REACT APPS!!!!
-    await this.setState({ logged_in_status: false })
+    await this.setState({ logged_in_status: true })
     await set_logged_in(this.state.logged_in_status);
+    // await topState(loginUser); //
     return this.props.history.push("/register"); // Zack's recommendation, or another method...
 
   }
@@ -151,7 +152,7 @@ class Login extends Component {
             <h5 className="tc f5">Not yet a member?</h5>
           </div>
           <div className="col-md-12 padding">
-            <a href="/register" className="btn btn-secondary marginButton" onClick={(event) => this.async(event, set_logged_in)}>Register</a>
+            <a href="/register" className="btn btn-secondary marginButton" onClick={(event) => this.async(event, topLevelState, set_logged_in)}>Register</a>
           </div>
         </div>
       </div>
