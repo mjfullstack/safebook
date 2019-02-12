@@ -155,7 +155,7 @@ class Login extends Component {
             <h5 className="tc f5">Not yet a member?</h5>
           </div>
           <div className="col-md-12 padding">
-            <a href="/register" className="btn btn-secondary marginButton" onClick={(event) => this.async(event, topLevelState, set_logged_in)}>Register</a>
+            <a  className="btn btn-secondary marginButton" onClick={(event) => this.async(event, topLevelState, set_logged_in)}>Register</a>
           </div>
         </div>
       </div>
