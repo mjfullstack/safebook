@@ -43,7 +43,7 @@ class Register extends Component {
       }
     )
     const file = await res.json();
-    // console.log(file);
+    console.log(file);
     this.setState({
       imageURL: file.secure_url,
     });
@@ -260,17 +260,24 @@ class Register extends Component {
               </div>
             </div>
           </div>
+          <h2 className="paddingTitle">Select Profile Pic:</h2>
           <div className="row">
             <div className="col-md-4" />
             <div className="col-md-4">
-              <input className='pa4'
-                type="file"
-                id="file"
-                name="file"
-                placeholder="Upload an Image"
-                required
-                onChange={this.uploadFile}
-              />
+              <div id="upload_button">
+                <label>
+                  <h5 className="tc f5">Choose a Photo to Upload:</h5>
+                  <input className='pa4 '
+                    type="file"
+                    id="file"
+                    name="file"
+                    placeholder="Upload an Image"
+                    required
+                    onChange={this.uploadFile}
+                  />
+                  <span className="btn btn-secondary marginButton">Upload Files...</span>
+                </label>
+              </div>
             </div>
             <div className="col-md-4" />
           </div>

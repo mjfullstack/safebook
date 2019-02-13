@@ -32,7 +32,7 @@
 }
 
 .paddingTitle {
-  padding-top: 5rem;
+  padding-top: 3rem;
   padding-bottom: 1rem;
 }
 
@@ -85,3 +85,24 @@ h2 {
   max-height: 100%;
   max-width: 100%;
 } */
+
+#upload_button input[type=file] {
+  display:none;
+  margin:10px;
+}
+
+#upload_button input[type=file] + label {
+  display:inline-block;
+  margin:20px;
+  padding: 4px 32px;
+  background-color: #FFFFFF;
+  border:solid 1px #666F77;
+  border-radius: 6px;
+  color:#666F77;
+}
+
+#upload_button input[type=file]:active + label {
+  background-image: none;
+  background-color:#2D6C7A;
+  color:#FFFFFF;
+}
